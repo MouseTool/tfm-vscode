@@ -9,6 +9,9 @@ tfm = {}
 --- Transformice exec namespace
 tfm.exec = {}
 
+--- @class float:number @Floating-point precision decimal number
+--- @class XYString:string @String coordinates in the `x,y` format
+
 --- Deactivates the events log.
 --- @param activate boolean whether it should be active (default true)
 function debug.disableEventLog(activate) end
@@ -112,30 +115,62 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 --- @return integer @the image identifier
 function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer) end
 
+--- @alias JointType
+---| '0' # distance joint
+---| '1' # prismatic joint
+
+-- NOTE: to remove joint custom type description when/if lua-vscode
+-- supports expanding alias description of fields
+--- @class JointDef
+--- @field public type JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
+--- @field public point1 XYString @location of the ground1 anchor (default: the ground1's center)
+--- @field public point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
+--- @field public point3 XYString @location of the pulley's first anchor, only used with pulley joints
+--- @field public point4 XYString @location of the pulley's second anchor, only used with pulley joints
+--- @field public frequency float @distance joints' frequency
+--- @field public damping float @distance joints' damping ratio
+--- @field public axis XYString @prismatic joints' axis
+--- @field public angle XYString @prismatic joints' angle
+--- @field public limit1 float @prismatic and revolute joints' translation/rotation first limit
+--- @field public limit2 float @prismatic and revolute joints' translation/rotation second limit
+--- @field public forceMotor float @prismatic and revolute joints' motor power
+--- @field public speedMotor float @prismatic and revolute joints' motor speed
+--- @field public ratio float @revolute joints' ratio
+--- @field public line integer @draw line's thickness
+--- @field public color integer float @draw line's color
+--- @field public alpha float @draw line's opacity
+--- @field public foreground boolean @whether the draw line is foreground
+
 --- Adds a joint between two physic objects. . Note: In map XML codes, you can also add a « lua="id" » property in a joint definition to be able to interact with it with LUA code.
 --- @param id integer the identifier of the joint
 --- @param ground1 integer the first ground the joint will affect
 --- @param ground2 integer the second ground the joint will affect
---- @param jointDef table the ground description
----     - type (Int): 0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
----     - point1 (String "x,y"): location of the ground1 anchor (default: the ground1's center)
----     - point2 (String "x,y"): location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
----     - point3 (String "x,y"), point4 (String "x,y"): locations of the pulley's anchors, only used with pulley joints
----     - frequency (Float), damping (Float): distance joints' frequency and damping ratio
----     - axis (String "x,y"), angle (Int): prismatic joints' axis and angle
----     - limit1 (Float), limit2 (Float), forceMotor (Float), speedMotor (Float): prismatic and revolute joints' translation/rotation limits and motors
----     - ratio (Float): revolute joints' ratio
----     - line (Int), color (Int), alpha (Float), foreground (Boolean): if none of these properties is defined, the joint won't be drawn
+--- @param jointDef JointDef the ground description (table)
 function tfm.exec.addJoint(id,ground1,ground2,jointDef) end
+
+--- @class BodyDef
+--- @field public type integer
+--- @field public width integer
+--- @field public height integer
+--- @field public foreground boolean
+--- @field public friction float
+--- @field public restitution float
+--- @field public angle integer
+--- @field public color integer
+--- @field public miceCollision boolean
+--- @field public groundCollision boolean
+--- @field public dynamic boolean
+--- @field public fixedRotation boolean
+--- @field public mass integer
+--- @field public linearDamping float
+--- @field public angularDamping float
 
 --- Spawns a ground.
 --- @param id integer the identifier of the physic object
 --- @param xPosition integer the horizontal coordinate of the center of the ground
 --- @param yPosition integer the vertical coordinate of the center of the ground
---- @param bodyDef table the ground description
----     - type (Int), width (Int), height (Int), foreground (Boolean), friction (Float), restitution (Float), angle (Int), color (Int), miceCollision (Boolean), groundCollision (Boolean)
----     - dynamic (Boolean), fixedRotation (Boolean), mass (Int), linearDamping (Float), angularDamping (Float) for dynamic grounds
-function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
+--- @param bodyDef BodyDef the ground description (table)
+function tfm.exec.addPhysicObjects(id,xPosition,yPosition,bodyDef) end
 
 --- Spawns a shaman object.
 --- @param objectType integer the type of the shaman object to spawn
