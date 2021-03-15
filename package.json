@@ -1,0 +1,11 @@
+{
+  "name": "tfm-vscode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node generate.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
