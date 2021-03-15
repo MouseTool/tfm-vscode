@@ -1,6 +1,9 @@
 --- @class float:number @Floating-point precision decimal number
 --- @class XYString:string @String coordinates in the `x,y` format
 
+---@class debuglibtfm
+debug = {}
+
 --- Global Transformice namespace
 tfm = {}
 
@@ -24,12 +27,12 @@ tfm.enum = {}
 --- @field y integer @The vertical coordinate of the object.
 
 --- @class TfmPlayer
---- @field cheeses integer
+--- @field cheeses integer @The number of cheeses that the player is carrying. This property is useful in multiple-cheese maps (dodue).
 --- @field community string @The legacy community of the player. This exists for backward compatibility, consider using `language` instead.
 --- @field gender integer
 --- @field hasCheese boolean
 --- @field id integer
---- @field inHardMode integer
+--- @field inHardMode integer @Deprecated. Use `shamanMode` instead.
 --- @field isDead boolean
 --- @field isFacingRight boolean
 --- @field isInvoking boolean
@@ -96,6 +99,14 @@ function debug.disableEventLog(activate) end
 --- Gets the current lua thread name.
 --- @return string @the current thread name
 function debug.getCurrentThreadName() end
+
+--- Returns a string with a traceback of the call stack. The optional message string is appended at the beginning of the traceback.
+---
+--- [View documents](command:extension.lua.doc?["en-US/52/manual.html/pdf-debug.traceback"])
+--- @param message? any
+--- @param level?   integer
+--- @return string  message
+function debug.traceback(message, level) end
 
 --- Listens to the player's keyboard events.
 --- @param playerName string the player you want to listen keyboard events from
