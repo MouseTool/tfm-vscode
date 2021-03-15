@@ -57,13 +57,13 @@ function system.loadFile(fileNumber) end
 function system.loadPlayerData(playerName) end
 
 --- Creates a new timer to call a function after a delay, once or continuously.
---- @param callback function The function to call
+--- @param callback fun(timerId:integer, arg1:any, arg2:any, arg3:any, arg4:any) The function to call. The first argument of this function is the timer's identifier
 --- @param time integer the number of milliseconds that the function call should be delayed by
 --- @param loop boolean whether the function call should loop or happen only once (default false)
---- @param arg1 any 1st argument of the callback function (default nil)
---- @param arg2 any 2nd argument of the callback function (default nil)
---- @param arg3 any 3rd argument of the callback function (default nil)
---- @param arg4 any 4th argument of the callback function (default nil)
+--- @param arg1 any 2nd argument of the callback function (default nil)
+--- @param arg2 any 3rd argument of the callback function (default nil)
+--- @param arg3 any 4th argument of the callback function (default nil)
+--- @param arg4 any 5th argument of the callback function (default nil)
 --- @return integer @the new timer id
 function system.newTimer(callback,time,loop,arg1,arg2,arg3,arg4) end
 
@@ -82,15 +82,15 @@ function system.saveFile(data,fileNumber) end
 --- @param data string the player data to save
 function system.savePlayerData(playerName,data) end
 
---- Add defilante bonus.
---- @param type integer Bonus type (see tfm.enum.bonus) (default 1)
---- @param x integer X position. (default 0)
---- @param y integer Y position. (default 0)
---- @param id integer Identifier. (default 0)
---- @param angle integer Angle (deg). (default 0)
---- @param visible boolean Make the bonus visible or not. (default true)
---- @param targetPlayer string Send only to this specific player. (default nil)
-function tfm.exec.addBonus(type,x,y,id,angle,visible,targetPlayer) end
+--- Adds a defilante bonus (token) to the map.
+--- @param type integer bonus type (see tfm.enum.bonus) (default 1)
+--- @param xPosition integer the horizontal coordinate of the bonus (default 0)
+--- @param yPosition integer the vertical coordinate of the bonus (default 0)
+--- @param id integer the identifier of the bonus (default 0)
+--- @param angle integer the angle of the bonus (default 0)
+--- @param visible boolean whether the bonus should be visible (default true)
+--- @param targetPlayer string the player who should see the bonus (if nil, applies to all players) (default nil)
+function tfm.exec.addBonus(type,xPosition,yPosition,id,angle,visible,targetPlayer) end
 
 --- Adds conjuration to the map. Note: Grid coordinate are regular coordinate divided by 10 (as conjuration is a 10x10 pixel square).
 --- @param xPosition integer the horizontal grid coordinate of the conjuration
@@ -260,9 +260,9 @@ function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed
 --- @param miceOnly boolean whether the explosion should affect only mice, or objects too (default false)
 function tfm.exec.explosion(xPosition,yPosition,power,radius,miceOnly) end
 
---- Froze a player.
---- @param playerName string the player's nickname
---- @param freeze boolean Freeze or unfreeze (default true)
+--- Freezes the selected player.
+--- @param playerName string the player to freeze
+--- @param freeze boolean whether the player should be frozen (default true)
 function tfm.exec.freezePlayer(playerName,freeze) end
 
 --- Gives the cheese to a player.
@@ -307,7 +307,7 @@ function tfm.exec.lowerSyncDelay(playerName) end
 --- @param xSpeed integer the horizontal coordinate of the speed to give to the object (default 0)
 --- @param ySpeed integer the vertical coordinate of the speed to give to the object (default 0)
 --- @param speedOffset boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
---- @param angle integer the angle of the the object (default 0)
+--- @param angle integer the angle of the object (default 0)
 --- @param angleOffset boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
 function tfm.exec.moveObject(objectId,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset,angle,angleOffset) end
 
@@ -315,10 +315,10 @@ function tfm.exec.moveObject(objectId,xPosition,yPosition,positionOffset,xSpeed,
 --- @param playerName string the player to move
 --- @param xPosition integer the horizontal coordinate of the point where the player will be moved
 --- @param yPosition integer the vertical coordinate of the point where the player will be moved
---- @param positionOffset boolean whether the specified position an offset to apply to the current one, or the absolute one (default false)
+--- @param positionOffset boolean whether the specified position is an offset to apply to the current one, or the absolute one (default false)
 --- @param xSpeed integer the horizontal coordinate of the speed to give to the player (default 0)
 --- @param ySpeed integer the vertical coordinate of the speed to give to the player (default 0)
---- @param speedOffset boolean whether the specified speed an offset to apply to the current one, or the absolute one (default false)
+--- @param speedOffset boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
 function tfm.exec.movePlayer(playerName,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset) end
 
 --- Starts a new game
@@ -341,9 +341,9 @@ function tfm.exec.playEmote(playerName,emoteId,emoteArg) end
 --- @param playerName string the player who should win
 function tfm.exec.playerVictory(playerName) end
 
---- Remove a defilante bonus.
---- @param id integer Identifier. (default 0)
---- @param targetPlayer string Send only to this specific player. (default nil)
+--- Removes a defilante bonus (token).
+--- @param id integer the identifier of the bonus (default 0)
+--- @param targetPlayer string the player whom should have the bonus removed (if nil, applies to all players) (default nil)
 function tfm.exec.removeBonus(id,targetPlayer) end
 
 --- Takes away the cheese from a player.
@@ -413,10 +413,10 @@ function tfm.exec.setShamanMode(playerName,mode) end
 --- @param makeAVampire boolean whether the player should be a vampire (default true)
 function tfm.exec.setVampirePlayer(playerName,makeAVampire) end
 
---- Set the world gravity.
---- @param x integer Gravity on x axis. (default 0)
---- @param y integer Gravity on y axis (default 10)
-function tfm.exec.setWorldGravity(x,y) end
+--- Changes the world acceleration along the horizontal (wind) and vertical (gravity) axes.
+--- @param xAcceleration integer the horizontal acceleration of the world (default 0)
+--- @param yAcceleration integer the vertical acceleration of the world (default 10)
+function tfm.exec.setWorldGravity(xAcceleration,yAcceleration) end
 
 --- Makes the snow fall.
 --- @param duration integer the snowfall duration in seconds (default 60)
