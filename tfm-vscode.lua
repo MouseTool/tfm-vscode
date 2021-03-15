@@ -93,7 +93,8 @@ tfm.exec = {}
 --- @param activate boolean whether it should be active (default true)
 function debug.disableEventLog(activate) end
 
---- Get current lua thread name.
+--- Gets the current lua thread name.
+--- @return string @the current thread name
 function debug.getCurrentThreadName() end
 
 --- Listens to the player's keyboard events.
@@ -256,7 +257,7 @@ function tfm.exec.addJoint(id,ground1,ground2,jointDef) end
 --- @param xPosition integer the horizontal coordinate of the center of the ground
 --- @param yPosition integer the vertical coordinate of the center of the ground
 --- @param bodyDef BodyDef the ground description (table)
-function tfm.exec.addPhysicObjects(id,xPosition,yPosition,bodyDef) end
+function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 
 --- Spawns a shaman object.
 --- @param objectType integer the type of the shaman object to spawn
