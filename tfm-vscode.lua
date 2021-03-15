@@ -1,16 +1,93 @@
+--- @class float:number @Floating-point precision decimal number
+--- @class XYString:string @String coordinates in the `x,y` format
+
+--- Global Transformice namespace
+tfm = {}
+
+--- Transformice enumerations table
+tfm.enum = {}
+
+--- @class TfmMisc
+--- @field apiVersion string
+--- @field transformiceVersion string
+
+--- @class TfmShamanObject
+--- @field angle integer
+--- @field baseType integer
+--- @field colors string[]
+--- @field ghost boolean
+--- @field id integer
+--- @field type integer
+--- @field vx integer @The horizontal speed of the object.
+--- @field vy integer @The vertical speed of the object.
+--- @field x integer @The horizontal coordinate of the object.
+--- @field y integer @The vertical coordinate of the object.
+
+--- @class TfmPlayer
+--- @field cheeses integer
+--- @field community string @The legacy community of the player. This exists for backward compatibility, consider using `language` instead.
+--- @field gender integer
+--- @field hasCheese boolean
+--- @field id integer
+--- @field inHardMode integer
+--- @field isDead boolean
+--- @field isFacingRight boolean
+--- @field isInvoking boolean
+--- @field isJumping boolean
+--- @field isShaman boolean
+--- @field isVampire boolean
+--- @field language string
+--- @field look string
+--- @field movingLeft boolean
+--- @field movingRight boolean
+--- @field playerName string
+--- @field registrationDate integer
+--- @field score integer
+--- @field shamanMode integer
+--- @field spouseId integer
+--- @field spouseName string
+--- @field title integer
+--- @field tribeId integer
+--- @field tribeName string
+--- @field vx integer @The horizontal speed of the player.
+--- @field vy integer @The vertical speed of the player.
+--- @field x integer @The horizontal coordinate of the player.
+--- @field y integer @The vertical coordinate of the player.
+
+--- @class XmlMapInfo
+--- @field author string
+--- @field mapCode integer
+--- @field permCode integer
+--- @field xml string
+
+--- @class TfmRoom
+--- @field community string @The legacy community of the room. This exists for backward compatibility, consider using `language` instead.
+--- @field currentMap string
+--- @field isTribeHouse boolean
+--- @field language string
+--- @field maxPlayers integer
+--- @field mirroredMap boolean
+--- @field name string
+--- @field objectList table<integer, TfmShamanObject> @<objectId, objectMeta>
+--- @field passwordProtected boolean
+--- @field playerList table<string, TfmPlayer> @<playerName, playerMeta>
+--- @field uniquePlayers integer|nil @The number of unique IP addresses in the room. Module team only.
+--- @field xmlMapInfo XmlMapInfo|nil
+
+--- @class TfmGet @Transformice metadata
+--- @field misc TfmMisc
+--- @field room TfmRoom
+tfm.get = {}
+
 --- Transformice system namespace
 system = {}
 
 -- Transformice user interface namespace
 ui = {}
 
---- Global Transformice namespace
-tfm = {}
+--- @class TfmExec
 --- Transformice exec namespace
 tfm.exec = {}
-
---- @class float:number @Floating-point precision decimal number
---- @class XYString:string @String coordinates in the `x,y` format
 
 --- Deactivates the events log.
 --- @param activate boolean whether it should be active (default true)
@@ -42,21 +119,25 @@ function system.disableChatCommandDisplay(command,hide) end
 function system.exit() end
 
 --- Gives an event reward to the targeted player.
+--- Event elevation only.
 --- @param playerName string the player to give the gift to
 --- @param giftCode string the gift identifier (given by an admin)
 function system.giveEventGift(playerName,giftCode) end
 
 --- Requests the loading of a data file. The event eventFileLoaded is triggered when the file gets loaded.
+--- Module team only.
 --- @param fileNumber integer the identifier of the file to load (default 0)
 --- @return boolean @whether the loading got started
 function system.loadFile(fileNumber) end
 
 --- Requests the loading of the player's data for this module. The event eventPlayerDataLoaded is triggered when the player data gets loaded.
+--- Module team only.
 --- @param playerName string the player about whom you want to get the data
 --- @return boolean @whether the loading got started
 function system.loadPlayerData(playerName) end
 
 --- Creates a new timer to call a function after a delay, once or continuously.
+--- Module team only.
 --- @param callback fun(timerId:integer, arg1:any, arg2:any, arg3:any, arg4:any) The function to call. The first argument of this function is the timer's identifier
 --- @param time integer the number of milliseconds that the function call should be delayed by
 --- @param loop boolean whether the function call should loop or happen only once (default false)
@@ -68,16 +149,19 @@ function system.loadPlayerData(playerName) end
 function system.newTimer(callback,time,loop,arg1,arg2,arg3,arg4) end
 
 --- Destroys a timer.
+--- Module team only.
 --- @param timerId integer the identifier of the timer to stop
 function system.removeTimer(timerId) end
 
 --- Requests the saving of a data file (throttled to one per minute). The event eventFileSaved is triggered when the file get saved.
+--- Module team only.
 --- @param data string the data to store in the file
 --- @param fileNumber integer the identifier (from 0 to 99) of the file to write the data in (default 0)
 --- @return boolean @whether the saving got started
 function system.saveFile(data,fileNumber) end
 
 --- Saves module data about a player. Please note that this data is per player and per Lua dev, so take care not to overwrite data from another one of your modules.
+--- Module team only.
 --- @param playerName string the player about whom you want to save data
 --- @param data string the player data to save
 function system.savePlayerData(playerName,data) end
@@ -118,28 +202,30 @@ function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer) end
 --- @alias JointType
 ---| '0' # distance joint
 ---| '1' # prismatic joint
+---| '2' # pulley joint
+---| '3' # revolute joint
 
 -- NOTE: to remove joint custom type description when/if lua-vscode
 -- supports expanding alias description of fields
 --- @class JointDef
---- @field public type JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
---- @field public point1 XYString @location of the ground1 anchor (default: the ground1's center)
---- @field public point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
---- @field public point3 XYString @location of the pulley's first anchor, only used with pulley joints
---- @field public point4 XYString @location of the pulley's second anchor, only used with pulley joints
---- @field public frequency float @distance joints' frequency
---- @field public damping float @distance joints' damping ratio
---- @field public axis XYString @prismatic joints' axis
---- @field public angle XYString @prismatic joints' angle
---- @field public limit1 float @prismatic and revolute joints' translation/rotation first limit
---- @field public limit2 float @prismatic and revolute joints' translation/rotation second limit
---- @field public forceMotor float @prismatic and revolute joints' motor power
---- @field public speedMotor float @prismatic and revolute joints' motor speed
---- @field public ratio float @revolute joints' ratio
---- @field public line integer @draw line's thickness
---- @field public color integer float @draw line's color
---- @field public alpha float @draw line's opacity
---- @field public foreground boolean @whether the draw line is foreground
+--- @field type JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
+--- @field point1 XYString @location of the ground1 anchor (default: the ground1's center)
+--- @field point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
+--- @field point3 XYString @location of the pulley's first anchor, only used with pulley joints
+--- @field point4 XYString @location of the pulley's second anchor, only used with pulley joints
+--- @field frequency float @distance joints' frequency
+--- @field damping float @distance joints' damping ratio
+--- @field axis XYString @prismatic joints' axis
+--- @field angle XYString @prismatic joints' angle
+--- @field limit1 float @prismatic and revolute joints' translation/rotation first limit
+--- @field limit2 float @prismatic and revolute joints' translation/rotation second limit
+--- @field forceMotor float @prismatic and revolute joints' motor power
+--- @field speedMotor float @prismatic and revolute joints' motor speed
+--- @field ratio float @revolute joints' ratio
+--- @field line integer @draw line's thickness
+--- @field color integer float @draw line's color
+--- @field alpha float @draw line's opacity
+--- @field foreground boolean @whether the draw line is foreground
 
 --- Adds a joint between two physic objects. . Note: In map XML codes, you can also add a « lua="id" » property in a joint definition to be able to interact with it with LUA code.
 --- @param id integer the identifier of the joint
@@ -149,21 +235,21 @@ function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer) end
 function tfm.exec.addJoint(id,ground1,ground2,jointDef) end
 
 --- @class BodyDef
---- @field public type integer
---- @field public width integer
---- @field public height integer
---- @field public foreground boolean
---- @field public friction float
---- @field public restitution float
---- @field public angle integer
---- @field public color integer
---- @field public miceCollision boolean
---- @field public groundCollision boolean
---- @field public dynamic boolean
---- @field public fixedRotation boolean
---- @field public mass integer
---- @field public linearDamping float
---- @field public angularDamping float
+--- @field type integer
+--- @field width integer
+--- @field height integer
+--- @field foreground boolean
+--- @field friction float
+--- @field restitution float
+--- @field angle integer
+--- @field color integer
+--- @field miceCollision boolean
+--- @field groundCollision boolean
+--- @field dynamic boolean
+--- @field fixedRotation boolean
+--- @field mass integer
+--- @field linearDamping float
+--- @field angularDamping float
 
 --- Spawns a ground.
 --- @param id integer the identifier of the physic object
@@ -189,6 +275,7 @@ function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,yS
 function tfm.exec.changePlayerSize(playerName,size) end
 
 --- Displays a chat message.
+--- Module team only.
 --- @param message string the chat message to display
 --- @param playerName string the player who will get the message (if nil, applies to all players) (default nil)
 function tfm.exec.chatMessage(message,playerName) end
@@ -296,6 +383,7 @@ function tfm.exec.killPlayer(playerName) end
 function tfm.exec.linkMice(playerName1,playerName2,linked) end
 
 --- Lowers the synchronization delay of a player to 400ms max
+--- Module team only.
 --- @param playerName string the player who should have a lower sync delay
 function tfm.exec.lowerSyncDelay(playerName) end
 

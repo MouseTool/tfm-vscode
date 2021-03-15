@@ -154,7 +154,7 @@ function generateDocs(funcs) {
     fs.writeFileSync('gen.lua', new_lines.join("\n"));
 }
 
-var buf = fs.readFile('luahelp.txt', 'utf8', (err, data) => {
+var buf = fs.readFile('luahelp_funcs.txt', 'utf8', (err, data) => {
     if (err) {
         throw err;
     }
