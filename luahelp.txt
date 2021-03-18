@@ -309,7 +309,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.29
+      transformiceVersion : 7.3
     room
       community : -
       currentMap : 0
@@ -352,7 +352,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1615659112888
+          registrationDate : 1616081610617
           score : 0
           shamanMode : 0
           spouseId : 1

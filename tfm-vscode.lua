@@ -12,7 +12,7 @@ tfm.enum = {}
 
 --- @class TfmMisc
 --- @field apiVersion string
---- @field transformiceVersion string
+--- @field transformiceVersion float
 
 --- @class TfmShamanObject
 --- @field angle integer
