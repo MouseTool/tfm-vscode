@@ -1,7 +1,7 @@
 --- @class float:number @Floating-point precision decimal number
 --- @class XYString:string @String coordinates in the `x,y` format
 
----@class debuglibtfm
+--- @class debuglibtfm
 debug = {}
 
 --- Global Transformice namespace
