@@ -309,7 +309,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.3
+      transformiceVersion : 7.32
     room
       community : -
       currentMap : 0
@@ -352,7 +352,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1616081610617
+          registrationDate : 1616686547698
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -604,7 +604,7 @@ Adds conjuration to the map. Note: Grid coordinate are regular coordinate divide
   yPosition (Int) the vertical grid coordinate of the conjuration
   duration (Int) the duration of the conjuration in milliseconds (default 10000)
 
-tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer)
+tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, scaleX, scaleY, rotation, alpha)
 Displays an image on the map.
   imageId (String) the image identifier
   target (String) the game element to attach the image to
@@ -619,6 +619,10 @@ Displays an image on the map.
   xPosition (Int) the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
   yPosition (Int) the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
   targetPlayer (String) the player who will see the image (if nil, applies to all players) (default nil)
+  scaleX (Number) Image scale X (default 1)
+  scaleY (Number) Image scale Y (default 1)
+  rotation (Number) Image rotation in radian (default 0)
+  alpha (Number) Image alpha (default 1)
 Returns (Int) the image identifier
 
 tfm.exec.addJoint(id, ground1, ground2, jointDef)
