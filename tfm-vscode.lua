@@ -505,6 +505,7 @@ function tfm.exec.setNameColor(playerName,color) end
 function tfm.exec.setPlayerScore(playerName,score,add) end
 
 --- Changes the room's current synchronizer (or resets it).
+--- Module team only.
 --- @param playerName string the player who should become the room sync (use nil to let the server decide) (default nil)
 function tfm.exec.setPlayerSync(playerName) end
 
