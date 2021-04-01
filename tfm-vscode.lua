@@ -211,12 +211,12 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 --- @param xPosition integer the horizontal offset of the anchor of the image (0 being the middle of the game element) (default 0)
 --- @param yPosition integer the vertical offset of the anchor of the image (0 being the middle of the game element) (default 0)
 --- @param targetPlayer string the player who will see the image (if nil, applies to all players) (default nil)
---- @param xScale integer the horizontal (width) scale of the image (default 1)
---- @param yScale integer the vertical (height) scale of the image (default 1)
---- @param angle integer the rotation angle about anchor of the image, in radians (default 0)
---- @param alpha integer the opacity of the image, from 0 (transparent) to 1 (opaque) (default 1)
---- @param xAnchor integer the horizontal offset (in 0 to 1 scale) of the image's anchor (0 being the left of the image) (default 0)
---- @param yAnchor integer the vertical offset (in 0 to 1 scale) of the image's anchor (0 being the top of the image) (default 0)
+--- @param xScale float the horizontal (width) scale of the image (default 1)
+--- @param yScale float the vertical (height) scale of the image (default 1)
+--- @param angle float the rotation angle about anchor of the image, in radians (default 0)
+--- @param alpha float the opacity of the image, from 0 (transparent) to 1 (opaque) (default 1)
+--- @param xAnchor float the horizontal offset (in 0 to 1 scale) of the image's anchor (0 being the left of the image) (default 0)
+--- @param yAnchor float the vertical offset (in 0 to 1 scale) of the image's anchor (0 being the top of the image) (default 0)
 --- @return integer @the image identifier
 function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,xScale,yScale,angle,alpha,xAnchor,yAnchor) end
 
@@ -292,7 +292,7 @@ function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,yS
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
---- @param size integer the new size of the player (between 0.1 and 5) (default 1)
+--- @param size float the new size of the player (between 0.1 and 5) (default 1)
 function tfm.exec.changePlayerSize(playerName,size) end
 
 --- Displays a chat message.
@@ -353,10 +353,10 @@ function tfm.exec.disableWatchCommand(activate) end
 --- @param particleType integer the kind of particle you want to display
 --- @param xPosition integer the horizontal coordinate of the particle
 --- @param yPosition integer the vertical coordinate of the particle
---- @param xSpeed integer the horizontal speed of the particle (default 0)
---- @param ySpeed integer the vertical speed of the particle (default 0)
---- @param xAcceleration integer the horizontal acceleration of the particle (default 0)
---- @param yAcceleration integer the vertical acceleration of the particle (default 0)
+--- @param xSpeed float the horizontal speed of the particle (default 0)
+--- @param ySpeed float the vertical speed of the particle (default 0)
+--- @param xAcceleration float the horizontal acceleration of the particle (default 0)
+--- @param yAcceleration float the vertical acceleration of the particle (default 0)
 --- @param targetPlayer string the player who should see the particle (if nil, applies to all players) (default nil)
 function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed,xAcceleration,yAcceleration,targetPlayer) end
 
@@ -562,7 +562,7 @@ function ui.addPopup(id,type,text,targetPlayer,x,y,width,fixedPos) end
 --- @param height integer the height in pixels of the text area (if 0, it will be ajusted to the text height) (default 0)
 --- @param backgroundColor integer the background color of the text area (default 0x324650)
 --- @param borderColor integer the border color of the text area (default 0)
---- @param backgroundAlpha integer the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
+--- @param backgroundAlpha float the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
 --- @param fixedPos boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
 function ui.addTextArea(id,text,targetPlayer,x,y,width,height,backgroundColor,borderColor,backgroundAlpha,fixedPos) end
 

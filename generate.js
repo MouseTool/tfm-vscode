@@ -63,7 +63,7 @@ const FUNC_RETURNS_REGEX = /^Returns \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
  * @param {string} content 
  */
 function parseFunctions(content) {
-    var lines = content.split(/\r\n/);
+    var lines = content.split(/\r?\n/);
     var funcs = [];
     var currentFunc = null;
     var currentParam = null;
@@ -85,7 +85,6 @@ function parseFunctions(content) {
             if (currentFunc) {
                 funcs.push(currentFunc);
             }
-            //if (m[1] == "tfm.exec.addPhysicObject") continue;
             currentFunc = new TfmFunction(m[1]);
         } else if (currentFunc !== null) {
             if (line.startsWith(" ".repeat(4))) {
@@ -116,7 +115,7 @@ function parseFunctions(content) {
 const MAP_TO_EMMYLUA = {
     "String": "string",
     "Int": "integer",
-    "Number": "integer",
+    "Number": "number",
     "Boolean": "boolean",
     "Table": "table",
     "Function": "function",

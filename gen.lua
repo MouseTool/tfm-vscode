@@ -98,8 +98,14 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 --- @param xPosition integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
 --- @param yPosition integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
 --- @param targetPlayer string the player who will see the image (if nil, applies to all players) (default nil)
+--- @param scaleX number Image scale X (default 1)
+--- @param scaleY number Image scale Y (default 1)
+--- @param rotation number Image rotation in radian (default 0)
+--- @param alpha number Image alpha (default 1)
+--- @param anchorX number Image anchor X (0..1) (default 0)
+--- @param anchorY number Image anchor Y (0..1) (default 0)
 --- @return integer @the image identifier
-function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer) end
+function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,scaleX,scaleY,rotation,alpha,anchorX,anchorY) end
 
 --- Adds a joint between two physic objects. . Note: In map XML codes, you can also add a « lua="id" » property in a joint definition to be able to interact with it with LUA code.
 --- @param id integer the identifier of the joint
@@ -139,7 +145,7 @@ function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,yS
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
---- @param size integer the new size of the player (between 0.1 and 5) (default 1)
+--- @param size number the new size of the player (between 0.1 and 5) (default 1)
 function tfm.exec.changePlayerSize(playerName,size) end
 
 --- Displays a chat message.
@@ -199,10 +205,10 @@ function tfm.exec.disableWatchCommand(activate) end
 --- @param particleType integer the kind of particle you want to display
 --- @param xPosition integer the horizontal coordinate of the particle
 --- @param yPosition integer the vertical coordinate of the particle
---- @param xSpeed integer the horizontal speed of the particle (default 0)
---- @param ySpeed integer the vertical speed of the particle (default 0)
---- @param xAcceleration integer the horizontal acceleration of the particle (default 0)
---- @param yAcceleration integer the vertical acceleration of the particle (default 0)
+--- @param xSpeed number the horizontal speed of the particle (default 0)
+--- @param ySpeed number the vertical speed of the particle (default 0)
+--- @param xAcceleration number the horizontal acceleration of the particle (default 0)
+--- @param yAcceleration number the vertical acceleration of the particle (default 0)
 --- @param targetPlayer string the player who should see the particle (if nil, applies to all players) (default nil)
 function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed,xAcceleration,yAcceleration,targetPlayer) end
 
@@ -218,6 +224,9 @@ function tfm.exec.explosion(xPosition,yPosition,power,radius,miceOnly) end
 --- @param playerName string the player's nickname
 --- @param freeze boolean Freeze or unfreeze (default true)
 function tfm.exec.freezePlayer(playerName,freeze) end
+
+--- Get current player sync.
+function tfm.exec.getPlayerSync() end
 
 --- Gives the cheese to a player.
 --- @param playerName string the player who should get the cheese
@@ -344,6 +353,10 @@ function tfm.exec.setNameColor(playerName,color) end
 --- @param add boolean whether the current score should be added to the specified one (default false)
 function tfm.exec.setPlayerScore(playerName,score,add) end
 
+--- Set current player sync.
+--- @param playerName string Target player name (Nil to let the server decide).
+function tfm.exec.setPlayerSync(playerName) end
+
 --- Sets the max number of players in a room.
 --- @param maxPlayers integer the maximum number of players the room can hold
 function tfm.exec.setRoomMaxPlayers(maxPlayers) end
@@ -398,7 +411,7 @@ function ui.addPopup(id,type,text,targetPlayer,x,y,width,fixedPos) end
 --- @param height integer the height in pixels of the text area (if 0, it will be ajusted to the text height) (default 0)
 --- @param backgroundColor integer the background color of the text area (default 0x324650)
 --- @param borderColor integer the border color of the text area (default 0)
---- @param backgroundAlpha integer the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
+--- @param backgroundAlpha number the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
 --- @param fixedPos boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
 function ui.addTextArea(id,text,targetPlayer,x,y,width,height,backgroundColor,borderColor,backgroundAlpha,fixedPos) end
 
