@@ -208,15 +208,17 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 ---     - !foregroundLayerDepth
 ---     - &fixedLayerDepthBeforeLuaInterfaces
 ---     - :fixedLayerDepthBehindLuaInterfaces
---- @param xPosition integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
---- @param yPosition integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
+--- @param xPosition integer the horizontal offset of the anchor of the image (0 being the middle of the game element) (default 0)
+--- @param yPosition integer the vertical offset of the anchor of the image (0 being the middle of the game element) (default 0)
 --- @param targetPlayer string the player who will see the image (if nil, applies to all players) (default nil)
 --- @param xScale integer the horizontal (width) scale of the image (default 1)
 --- @param yScale integer the vertical (height) scale of the image (default 1)
---- @param angle integer the rotation angle about the top-left corner of the image, in radians (default 0)
+--- @param angle integer the rotation angle about anchor of the image, in radians (default 0)
 --- @param alpha integer the opacity of the image, from 0 (transparent) to 1 (opaque) (default 1)
+--- @param xAnchor integer the horizontal offset (in 0 to 1 scale) of the image's anchor (0 being the left of the image) (default 0)
+--- @param yAnchor integer the vertical offset (in 0 to 1 scale) of the image's anchor (0 being the top of the image) (default 0)
 --- @return integer @the image identifier
-function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,xScale,yScale,angle,alpha) end
+function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,xScale,yScale,angle,alpha,xAnchor,yAnchor) end
 
 --- @alias JointType
 ---| '0' # distance joint
@@ -371,6 +373,11 @@ function tfm.exec.explosion(xPosition,yPosition,power,radius,miceOnly) end
 --- @param freeze boolean whether the player should be frozen (default true)
 function tfm.exec.freezePlayer(playerName,freeze) end
 
+--- Gets the player who is the room's current synchronizer.
+--- Module team only.
+--- @return string @the player's nickname
+function tfm.exec.getPlayerSync() end
+
 --- Gives the cheese to a player.
 --- @param playerName string the player who should get the cheese
 function tfm.exec.giveCheese(playerName) end
@@ -496,6 +503,10 @@ function tfm.exec.setNameColor(playerName,color) end
 --- @param score integer the score
 --- @param add boolean whether the current score should be added to the specified one (default false)
 function tfm.exec.setPlayerScore(playerName,score,add) end
+
+--- Changes the room's current synchronizer (or resets it).
+--- @param playerName string the player who should become the room sync (use nil to let the server decide) (default nil)
+function tfm.exec.setPlayerSync(playerName) end
 
 --- Sets the max number of players in a room.
 --- @param maxPlayers integer the maximum number of players the room can hold

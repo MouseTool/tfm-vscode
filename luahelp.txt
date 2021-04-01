@@ -274,6 +274,7 @@ tfm
     displayParticle
     explosion
     freezePlayer
+    getPlayerSync
     giveCheese
     giveConsumables
     giveMeep
@@ -297,6 +298,7 @@ tfm
     setGameTime
     setNameColor
     setPlayerScore
+    setPlayerSync
     setRoomMaxPlayers
     setRoomPassword
     setShaman
@@ -309,7 +311,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.32
+      transformiceVersion : 7.33
     room
       community : -
       currentMap : 0
@@ -352,7 +354,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1616686547698
+          registrationDate : 1617289669438
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -604,7 +606,7 @@ Adds conjuration to the map. Note: Grid coordinate are regular coordinate divide
   yPosition (Int) the vertical grid coordinate of the conjuration
   duration (Int) the duration of the conjuration in milliseconds (default 10000)
 
-tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, scaleX, scaleY, rotation, alpha)
+tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, scaleX, scaleY, rotation, alpha, anchorX, anchorY)
 Displays an image on the map.
   imageId (String) the image identifier
   target (String) the game element to attach the image to
@@ -623,6 +625,8 @@ Displays an image on the map.
   scaleY (Number) Image scale Y (default 1)
   rotation (Number) Image rotation in radian (default 0)
   alpha (Number) Image alpha (default 1)
+  anchorX (Number) Image anchor X (0..1) (default 0)
+  anchorY (Number) Image anchor Y (0..1) (default 0)
 Returns (Int) the image identifier
 
 tfm.exec.addJoint(id, ground1, ground2, jointDef)
@@ -742,6 +746,9 @@ tfm.exec.freezePlayer(playerName, freeze)
 Froze a player.
   playerName (String) the player's nickname
   freeze (Boolean) Freeze or unfreeze (default true)
+
+tfm.exec.getPlayerSync()
+Get current player sync.
 
 tfm.exec.giveCheese(playerName)
 Gives the cheese to a player.
@@ -867,6 +874,10 @@ Sets the player's score.
   playerName (String) the player who should get his or her score changed
   score (Int) the score
   add (Boolean) whether the current score should be added to the specified one (default false)
+
+tfm.exec.setPlayerSync(playerName)
+Set current player sync.
+  playerName (String) Target player name (Nil to let the server decide).
 
 tfm.exec.setRoomMaxPlayers(maxPlayers)
 Sets the max number of players in a room.
