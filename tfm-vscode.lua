@@ -290,6 +290,11 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost) end
 
+--- Spawns and attaches a ghost balloon to a player, or detaches all balloons.
+--- @param playerName string the player's nickname
+--- @param attach boolean whether the balloon should be attached (default true)
+function tfm.exec.attachBalloon(playerName,attach) end
+
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
 --- @param size float the new size of the player (between 0.1 and 5) (default 1)

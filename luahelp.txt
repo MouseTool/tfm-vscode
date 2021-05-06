@@ -256,6 +256,7 @@ tfm
     addJoint
     addPhysicObject
     addShamanObject
+    attachBalloon
     bindKeyboard
     changePlayerSize
     chatMessage
@@ -311,7 +312,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.33
+      transformiceVersion : 7.38
     room
       community : -
       currentMap : 0
@@ -354,7 +355,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1617289669438
+          registrationDate : 1620307362033
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -664,6 +665,11 @@ Spawns a shaman object.
   ySpeed (Int) the vertical speed of the object (default 0)
   ghost (Boolean) whether the spawned object should be transparent (default false)
 Returns (Int) the shaman object identifier
+
+tfm.exec.attachBalloon(playerName, yes)
+Tie a player to a balloon.
+  playerName (String) the player's nickname
+  yes (Boolean) Attach or dettach the balloon. (default true)
 
 tfm.exec.changePlayerSize(playerName, size)
 Changes the size of a player.
