@@ -1,8 +1,8 @@
 {
-  "name": "tfm-vscode",
-  "version": "1.0.0",
+  "name": "@mousetool/tfm-vscode",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dummy.js",
   "scripts": {
     "generate": "node generate.js"
   },
