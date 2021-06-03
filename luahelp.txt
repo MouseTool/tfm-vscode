@@ -312,7 +312,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.38
+      transformiceVersion : 7.42
     room
       community : -
       currentMap : 0
@@ -355,7 +355,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1620307362033
+          registrationDate : 1622726047483
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -666,10 +666,12 @@ Spawns a shaman object.
   ghost (Boolean) whether the spawned object should be transparent (default false)
 Returns (Int) the shaman object identifier
 
-tfm.exec.attachBalloon(playerName, yes)
+tfm.exec.attachBalloon(playerName, yes, color, transparent)
 Tie a player to a balloon.
   playerName (String) the player's nickname
   yes (Boolean) Attach or dettach the balloon. (default true)
+  color (Int) Balloon color [1-4]. (default 1)
+  transparent (Boolean) Make the balloon transparent. (default false)
 
 tfm.exec.changePlayerSize(playerName, size)
 Changes the size of a player.

@@ -2,11 +2,21 @@ const fs = require('fs');
 
 
 class Param {
+    /**
+     * @param {string} name
+     * @param {string} type
+     * @param {string} description
+     */
     constructor(name, type, description) {
         this.name = name;
         this.type = type;
         this.description = description || "";
         this.additional_description = [];
+    }
+
+    isOptional() {
+        return this.description != null
+                && this.description.match(/.*\(default(.*)\)\s?$/m)
     }
 
     addDescription(add) {
@@ -135,7 +145,7 @@ function generateDocs(funcs) {
         func.params.forEach((par) => {
             let type = MAP_TO_EMMYLUA[par.type];
             if (!type) throw 'no known type ' + par.type;
-            new_lines.push(`--- @param ${par.name} ${type} ${par.description}`);
+            new_lines.push(`--- @param ${par.name}${par.isOptional() ? "?":""} ${type} ${par.description}`);
             par.additional_description.forEach((desc) => {
                 new_lines.push(`--- ${desc}`);
             });

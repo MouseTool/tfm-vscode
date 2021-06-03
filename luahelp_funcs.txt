@@ -143,10 +143,12 @@ Spawns a shaman object.
   ghost (Boolean) whether the spawned object should be transparent (default false)
 Returns (Int) the shaman object identifier
 
-tfm.exec.attachBalloon(playerName, yes)
+tfm.exec.attachBalloon(playerName, yes, color, transparent)
 Tie a player to a balloon.
   playerName (String) the player's nickname
   yes (Boolean) Attach or dettach the balloon. (default true)
+  color (Int) Balloon color [1-4]. (default 1)
+  transparent (Boolean) Make the balloon transparent. (default false)
 
 tfm.exec.changePlayerSize(playerName, size)
 Changes the size of a player.
@@ -445,3 +447,4 @@ Updates the content of a text area.
   id (Int) the identifier of the text area
   text (String) the new text to display
   targetPlayer (String) the player who will get displayed the new text (if nil, applies to all players) (default nil)
+

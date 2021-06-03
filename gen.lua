@@ -1,5 +1,5 @@
 --- Deactivates the events log.
---- @param activate boolean whether it should be active (default true)
+--- @param activate? boolean whether it should be active (default true)
 function debug.disableEventLog(activate) end
 
 --- Get current lua thread name.
@@ -11,17 +11,17 @@ function debug.getCurrentThreadName() end
 ---     - to accurately listen for player movement (both arrows and wasd/zqsd keys), you can use 0 (left), 1 (up), 2 (right) or 3 (down)
 ---     - regular AS3 keycodes can be found on http://help.adobe.com/fr_FR/FlashPlatform/reference/actionscript/3/flash/ui/Keyboard.html
 --- @param down boolean whether it should listen for the press event, or the release one
---- @param activate boolean whether it should be active (default true)
+--- @param activate? boolean whether it should be active (default true)
 function system.bindKeyboard(playerName,keyCode,down,activate) end
 
 --- Listens to a player's mouse events.
 --- @param playerName string the player you want to listen mouse events from
---- @param active boolean whether it should be active (default true)
+--- @param active? boolean whether it should be active (default true)
 function system.bindMouse(playerName,active) end
 
 --- Prevents a module command (commands starting with « ! ») to be displayed in the room. If the supplied command is nil, the parameter will apply to all the commands.
---- @param command string the command (without the initial « ! ») to hide (default nil)
---- @param hide boolean whether the command should be hided (default true)
+--- @param command? string the command (without the initial « ! ») to hide (default nil)
+--- @param hide? boolean whether the command should be hided (default true)
 function system.disableChatCommandDisplay(command,hide) end
 
 --- Deactivates the lua script running.
@@ -33,7 +33,7 @@ function system.exit() end
 function system.giveEventGift(playerName,giftCode) end
 
 --- Requests the loading of a data file. The event eventFileLoaded is triggered when the file gets loaded.
---- @param fileNumber integer the identifier of the file to load (default 0)
+--- @param fileNumber? integer the identifier of the file to load (default 0)
 --- @return boolean @whether the loading got started
 function system.loadFile(fileNumber) end
 
@@ -45,11 +45,11 @@ function system.loadPlayerData(playerName) end
 --- Creates a new timer to call a function after a delay, once or continuously.
 --- @param callback function The function to call
 --- @param time integer the number of milliseconds that the function call should be delayed by
---- @param loop boolean whether the function call should loop or happen only once (default false)
---- @param arg1 any 1st argument of the callback function (default nil)
---- @param arg2 any 2nd argument of the callback function (default nil)
---- @param arg3 any 3rd argument of the callback function (default nil)
---- @param arg4 any 4th argument of the callback function (default nil)
+--- @param loop? boolean whether the function call should loop or happen only once (default false)
+--- @param arg1? any 1st argument of the callback function (default nil)
+--- @param arg2? any 2nd argument of the callback function (default nil)
+--- @param arg3? any 3rd argument of the callback function (default nil)
+--- @param arg4? any 4th argument of the callback function (default nil)
 --- @return integer @the new timer id
 function system.newTimer(callback,time,loop,arg1,arg2,arg3,arg4) end
 
@@ -59,7 +59,7 @@ function system.removeTimer(timerId) end
 
 --- Requests the saving of a data file (throttled to one per minute). The event eventFileSaved is triggered when the file get saved.
 --- @param data string the data to store in the file
---- @param fileNumber integer the identifier (from 0 to 99) of the file to write the data in (default 0)
+--- @param fileNumber? integer the identifier (from 0 to 99) of the file to write the data in (default 0)
 --- @return boolean @whether the saving got started
 function system.saveFile(data,fileNumber) end
 
@@ -69,19 +69,19 @@ function system.saveFile(data,fileNumber) end
 function system.savePlayerData(playerName,data) end
 
 --- Add defilante bonus.
---- @param type integer Bonus type (see tfm.enum.bonus) (default 1)
---- @param x integer X position. (default 0)
---- @param y integer Y position. (default 0)
---- @param id integer Identifier. (default 0)
---- @param angle integer Angle (deg). (default 0)
---- @param visible boolean Make the bonus visible or not. (default true)
---- @param targetPlayer string Send only to this specific player. (default nil)
+--- @param type? integer Bonus type (see tfm.enum.bonus) (default 1)
+--- @param x? integer X position. (default 0)
+--- @param y? integer Y position. (default 0)
+--- @param id? integer Identifier. (default 0)
+--- @param angle? integer Angle (deg). (default 0)
+--- @param visible? boolean Make the bonus visible or not. (default true)
+--- @param targetPlayer? string Send only to this specific player. (default nil)
 function tfm.exec.addBonus(type,x,y,id,angle,visible,targetPlayer) end
 
 --- Adds conjuration to the map. Note: Grid coordinate are regular coordinate divided by 10 (as conjuration is a 10x10 pixel square).
 --- @param xPosition integer the horizontal grid coordinate of the conjuration
 --- @param yPosition integer the vertical grid coordinate of the conjuration
---- @param duration integer the duration of the conjuration in milliseconds (default 10000)
+--- @param duration? integer the duration of the conjuration in milliseconds (default 10000)
 function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 
 --- Displays an image on the map.
@@ -95,15 +95,15 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 ---     - !foregroundLayerDepth
 ---     - &fixedLayerDepthBeforeLuaInterfaces
 ---     - :fixedLayerDepthBehindLuaInterfaces
---- @param xPosition integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
---- @param yPosition integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
---- @param targetPlayer string the player who will see the image (if nil, applies to all players) (default nil)
---- @param scaleX number Image scale X (default 1)
---- @param scaleY number Image scale Y (default 1)
---- @param rotation number Image rotation in radian (default 0)
---- @param alpha number Image alpha (default 1)
---- @param anchorX number Image anchor X (0..1) (default 0)
---- @param anchorY number Image anchor Y (0..1) (default 0)
+--- @param xPosition? integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
+--- @param yPosition? integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
+--- @param targetPlayer? string the player who will see the image (if nil, applies to all players) (default nil)
+--- @param scaleX? number Image scale X (default 1)
+--- @param scaleY? number Image scale Y (default 1)
+--- @param rotation? number Image rotation in radian (default 0)
+--- @param alpha? number Image alpha (default 1)
+--- @param anchorX? number Image anchor X (0..1) (default 0)
+--- @param anchorY? number Image anchor Y (0..1) (default 0)
 --- @return integer @the image identifier
 function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,scaleX,scaleY,rotation,alpha,anchorX,anchorY) end
 
@@ -136,85 +136,87 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @param objectType integer the type of the shaman object to spawn
 --- @param xPosition integer the horizontal position of the spawn
 --- @param yPosition integer the vertical position of the spawn
---- @param angle integer the rotation angle of the object, in degrees (default 0)
---- @param xSpeed integer the horizontal speed of the object (default 0)
---- @param ySpeed integer the vertical speed of the object (default 0)
---- @param ghost boolean whether the spawned object should be transparent (default false)
+--- @param angle? integer the rotation angle of the object, in degrees (default 0)
+--- @param xSpeed? integer the horizontal speed of the object (default 0)
+--- @param ySpeed? integer the vertical speed of the object (default 0)
+--- @param ghost? boolean whether the spawned object should be transparent (default false)
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost) end
 
 --- Tie a player to a balloon.
 --- @param playerName string the player's nickname
---- @param yes boolean Attach or dettach the balloon. (default true)
-function tfm.exec.attachBalloon(playerName,yes) end
+--- @param yes? boolean Attach or dettach the balloon. (default true)
+--- @param color? integer Balloon color [1-4]. (default 1)
+--- @param transparent? boolean Make the balloon transparent. (default false)
+function tfm.exec.attachBalloon(playerName,yes,color,transparent) end
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
---- @param size number the new size of the player (between 0.1 and 5) (default 1)
+--- @param size? number the new size of the player (between 0.1 and 5) (default 1)
 function tfm.exec.changePlayerSize(playerName,size) end
 
 --- Displays a chat message.
 --- @param message string the chat message to display
---- @param playerName string the player who will get the message (if nil, applies to all players) (default nil)
+--- @param playerName? string the player who will get the message (if nil, applies to all players) (default nil)
 function tfm.exec.chatMessage(message,playerName) end
 
 --- Deactivates the automatic afk death.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAfkDeath(activate) end
 
 --- Deactivates all shaman skills.
---- @param active boolean whether the deactivation should be active (default true)
+--- @param active? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAllShamanSkills(active) end
 
 --- Deactivates the automatic renewal of rounds.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAutoNewGame(activate) end
 
 --- Deactivates the automatic scoring management.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAutoScore(activate) end
 
 --- Deactivates the automatic selection of shaman.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAutoShaman(activate) end
 
 --- Deactivates the automatic remaining time change to 20s (when the shaman dies for example).
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableAutoTimeLeft(activate) end
 
 --- Disables the effects of the /debug command.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableDebugCommand(activate) end
 
 --- Disables the minimalist mode.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableMinimalistMode(activate) end
 
 --- Disables the /mort command.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableMortCommand(activate) end
 
 --- Deactivates physical consumables (like in racing and bootcamp rooms).
---- @param active boolean whether the deactivation should be active (default true)
+--- @param active? boolean whether the deactivation should be active (default true)
 function tfm.exec.disablePhysicalConsumables(active) end
 
 --- Enables or disables the shaman objects prespawn preview.
---- @param display boolean whether the prespawn preview should not be displayed (default true)
+--- @param display? boolean whether the prespawn preview should not be displayed (default true)
 function tfm.exec.disablePrespawnPreview(display) end
 
 --- Disables the effects of the /watch command.
---- @param activate boolean whether the deactivation should be active (default true)
+--- @param activate? boolean whether the deactivation should be active (default true)
 function tfm.exec.disableWatchCommand(activate) end
 
 --- Displays a particle.
 --- @param particleType integer the kind of particle you want to display
 --- @param xPosition integer the horizontal coordinate of the particle
 --- @param yPosition integer the vertical coordinate of the particle
---- @param xSpeed number the horizontal speed of the particle (default 0)
---- @param ySpeed number the vertical speed of the particle (default 0)
---- @param xAcceleration number the horizontal acceleration of the particle (default 0)
---- @param yAcceleration number the vertical acceleration of the particle (default 0)
---- @param targetPlayer string the player who should see the particle (if nil, applies to all players) (default nil)
+--- @param xSpeed? number the horizontal speed of the particle (default 0)
+--- @param ySpeed? number the vertical speed of the particle (default 0)
+--- @param xAcceleration? number the horizontal acceleration of the particle (default 0)
+--- @param yAcceleration? number the vertical acceleration of the particle (default 0)
+--- @param targetPlayer? string the player who should see the particle (if nil, applies to all players) (default nil)
 function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed,xAcceleration,yAcceleration,targetPlayer) end
 
 --- Throws an explosion.
@@ -222,12 +224,12 @@ function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed
 --- @param yPosition integer the vertical coordinate of the center of the explosion
 --- @param power integer the maximum power of the explosion
 --- @param radius integer the explosion radius (players further away won't be affected)
---- @param miceOnly boolean whether the explosion should affect only mice, or objects too (default false)
+--- @param miceOnly? boolean whether the explosion should affect only mice, or objects too (default false)
 function tfm.exec.explosion(xPosition,yPosition,power,radius,miceOnly) end
 
 --- Froze a player.
 --- @param playerName string the player's nickname
---- @param freeze boolean Freeze or unfreeze (default true)
+--- @param freeze? boolean Freeze or unfreeze (default true)
 function tfm.exec.freezePlayer(playerName,freeze) end
 
 --- Get current player sync.
@@ -240,17 +242,17 @@ function tfm.exec.giveCheese(playerName) end
 --- Gives consumables to the targeted player.
 --- @param playerName string the player to give the gift to
 --- @param consumableId string the consumable identifier
---- @param amount string the amount of consumables to give (default "1")
+--- @param amount? string the amount of consumables to give (default "1")
 function tfm.exec.giveConsumables(playerName,consumableId,amount) end
 
 --- Gives the meep competence to a player, or removes it.
 --- @param playerName string the player's nickname
---- @param canMeep boolean whether the player should be able to meep (default true)
+--- @param canMeep? boolean whether the player should be able to meep (default true)
 function tfm.exec.giveMeep(playerName,canMeep) end
 
 --- Gives the transformations to a player, or removes them.
 --- @param playerName string the player's nickname
---- @param canTransform boolean whether the player should be able to use transformations (default true)
+--- @param canTransform? boolean whether the player should be able to use transformations (default true)
 function tfm.exec.giveTransformations(playerName,canTransform) end
 
 --- Kills the selected player.
@@ -260,7 +262,7 @@ function tfm.exec.killPlayer(playerName) end
 --- Allows to link players like in soulmate maps.
 --- @param playerName1 string the first player's nickname
 --- @param playerName2 string the second player's nickname
---- @param linked boolean whether the two players should be linked (default true)
+--- @param linked? boolean whether the two players should be linked (default true)
 function tfm.exec.linkMice(playerName1,playerName2,linked) end
 
 --- Lowers the synchronization delay of a player to 400ms max
@@ -271,38 +273,38 @@ function tfm.exec.lowerSyncDelay(playerName) end
 --- @param objectId integer the shaman object identifier
 --- @param xPosition integer the horizontal coordinate of the point where the object will be moved
 --- @param yPosition integer the vertical coordinate of the point where the object will be moved
---- @param positionOffset boolean whether the specified position is an offset to apply to the current one, or the absolute one (default false)
---- @param xSpeed integer the horizontal coordinate of the speed to give to the object (default 0)
---- @param ySpeed integer the vertical coordinate of the speed to give to the object (default 0)
---- @param speedOffset boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
---- @param angle integer the angle of the the object (default 0)
---- @param angleOffset boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
+--- @param positionOffset? boolean whether the specified position is an offset to apply to the current one, or the absolute one (default false)
+--- @param xSpeed? integer the horizontal coordinate of the speed to give to the object (default 0)
+--- @param ySpeed? integer the vertical coordinate of the speed to give to the object (default 0)
+--- @param speedOffset? boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
+--- @param angle? integer the angle of the the object (default 0)
+--- @param angleOffset? boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
 function tfm.exec.moveObject(objectId,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset,angle,angleOffset) end
 
 --- Defines the speed and position of a player.
 --- @param playerName string the player to move
 --- @param xPosition integer the horizontal coordinate of the point where the player will be moved
 --- @param yPosition integer the vertical coordinate of the point where the player will be moved
---- @param positionOffset boolean whether the specified position an offset to apply to the current one, or the absolute one (default false)
---- @param xSpeed integer the horizontal coordinate of the speed to give to the player (default 0)
---- @param ySpeed integer the vertical coordinate of the speed to give to the player (default 0)
---- @param speedOffset boolean whether the specified speed an offset to apply to the current one, or the absolute one (default false)
+--- @param positionOffset? boolean whether the specified position an offset to apply to the current one, or the absolute one (default false)
+--- @param xSpeed? integer the horizontal coordinate of the speed to give to the player (default 0)
+--- @param ySpeed? integer the vertical coordinate of the speed to give to the player (default 0)
+--- @param speedOffset? boolean whether the specified speed an offset to apply to the current one, or the absolute one (default false)
 function tfm.exec.movePlayer(playerName,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset) end
 
 --- Starts a new game
---- @param mapCode string the map code (default nil)
+--- @param mapCode? string the map code (default nil)
 ---     - nil (a random map)
 ---     - 6 (vanilla map)
 ---     - @42583 (editor map)
 ---     - #4 (perm category map)
 ---     - anything beginning with '<' (xml map)
---- @param flipped boolean whether the map should be flipped (default nil (randomly mirrored in racing and bootcamp rooms, unless))
+--- @param flipped? boolean whether the map should be flipped (default nil (randomly mirrored in racing and bootcamp rooms, unless))
 function tfm.exec.newGame(mapCode,flipped) end
 
 --- Makes a player do an emote.
 --- @param playerName string the player who should do the emote
 --- @param emoteId integer the emote to do
---- @param emoteArg string the emote attribute (for the flag emote for example) (default nil)
+--- @param emoteArg? string the emote attribute (for the flag emote for example) (default nil)
 function tfm.exec.playEmote(playerName,emoteId,emoteArg) end
 
 --- Makes a player enter the hole. It only works if the player already has a cheese!
@@ -310,8 +312,8 @@ function tfm.exec.playEmote(playerName,emoteId,emoteArg) end
 function tfm.exec.playerVictory(playerName) end
 
 --- Remove a defilante bonus.
---- @param id integer Identifier. (default 0)
---- @param targetPlayer string Send only to this specific player. (default nil)
+--- @param id? integer Identifier. (default 0)
+--- @param targetPlayer? string Send only to this specific player. (default nil)
 function tfm.exec.removeBonus(id,targetPlayer) end
 
 --- Takes away the cheese from a player.
@@ -339,12 +341,12 @@ function tfm.exec.removePhysicObject(id) end
 function tfm.exec.respawnPlayer(playerName) end
 
 --- Sets whether the following maps should be flipped (always, never, or TFM's default behaviour).
---- @param flipped boolean whether the maps should be flipped (default nil (the default TFM behaviour))
+--- @param flipped? boolean whether the maps should be flipped (default nil (the default TFM behaviour))
 function tfm.exec.setAutoMapFlipMode(flipped) end
 
 --- Sets the game remaining time.
 --- @param time integer the remaining time in seconds
---- @param init boolean whether the remaining time should change even if the specified remaining time is higher than the current one (default true)
+--- @param init? boolean whether the remaining time should change even if the specified remaining time is higher than the current one (default true)
 function tfm.exec.setGameTime(time,init) end
 
 --- Changes a player's nickname's color.
@@ -355,7 +357,7 @@ function tfm.exec.setNameColor(playerName,color) end
 --- Sets the player's score.
 --- @param playerName string the player who should get his or her score changed
 --- @param score integer the score
---- @param add boolean whether the current score should be added to the specified one (default false)
+--- @param add? boolean whether the current score should be added to the specified one (default false)
 function tfm.exec.setPlayerScore(playerName,score,add) end
 
 --- Set current player sync.
@@ -372,27 +374,27 @@ function tfm.exec.setRoomPassword(password) end
 
 --- Makes a player a shaman.
 --- @param playerName string the player who should become a shaman
---- @param makeAShaman boolean whether the player should be a shaman (default true)
+--- @param makeAShaman? boolean whether the player should be a shaman (default true)
 function tfm.exec.setShaman(playerName,makeAShaman) end
 
 --- Changes the shaman mode of a player.
 --- @param playerName string the player's nickname who will have another shaman mode
---- @param mode integer the new shaman mode of the target (use nil to use the player's real mode) (default nil)
+--- @param mode? integer the new shaman mode of the target (use nil to use the player's real mode) (default nil)
 function tfm.exec.setShamanMode(playerName,mode) end
 
 --- Makes a player a vampire.
 --- @param playerName string the player to make a vampire
---- @param makeAVampire boolean whether the player should be a vampire (default true)
+--- @param makeAVampire? boolean whether the player should be a vampire (default true)
 function tfm.exec.setVampirePlayer(playerName,makeAVampire) end
 
 --- Set the world gravity.
---- @param x integer Gravity on x axis. (default 0)
---- @param y integer Gravity on y axis (default 10)
+--- @param x? integer Gravity on x axis. (default 0)
+--- @param y? integer Gravity on y axis (default 10)
 function tfm.exec.setWorldGravity(x,y) end
 
 --- Makes the snow fall.
---- @param duration integer the snowfall duration in seconds (default 60)
---- @param snowballPower integer  (default 10)
+--- @param duration? integer the snowfall duration in seconds (default 60)
+--- @param snowballPower? integer  (default 10)
 function tfm.exec.snow(duration,snowballPower) end
 
 --- Displays a popup.
@@ -400,29 +402,29 @@ function tfm.exec.snow(duration,snowballPower) end
 --- @param type integer the popup type (0 for simple, 1 for yes or no, 2 for player input)
 --- @param text string the text to display
 --- @param targetPlayer string the player who will see the popup (if nil, applies to all players)
---- @param x integer the horizontal coordinate of the top-left corner (default 50)
---- @param y integer the vertical coordinate of the top-left corner (default 50)
---- @param width integer the width in pixels of the popup (if 0, it will be ajusted to the text width) (default 0)
---- @param fixedPos boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
+--- @param x? integer the horizontal coordinate of the top-left corner (default 50)
+--- @param y? integer the vertical coordinate of the top-left corner (default 50)
+--- @param width? integer the width in pixels of the popup (if 0, it will be ajusted to the text width) (default 0)
+--- @param fixedPos? boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
 function ui.addPopup(id,type,text,targetPlayer,x,y,width,fixedPos) end
 
 --- Displays a text area.
 --- @param id integer the identifier of the text area
 --- @param text string the text to display
---- @param targetPlayer string the player who will see the text area (if nil, applies to all players) (default nil)
---- @param x integer the horizontal coordinate of the top-left corner (default 50)
---- @param y integer the vertical coordinate of the top-left corner (default 50)
---- @param width integer the width in pixels of the text area (if 0, it will be ajusted to the text width) (default 0)
---- @param height integer the height in pixels of the text area (if 0, it will be ajusted to the text height) (default 0)
---- @param backgroundColor integer the background color of the text area (default 0x324650)
---- @param borderColor integer the border color of the text area (default 0)
---- @param backgroundAlpha number the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
---- @param fixedPos boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
+--- @param targetPlayer? string the player who will see the text area (if nil, applies to all players) (default nil)
+--- @param x? integer the horizontal coordinate of the top-left corner (default 50)
+--- @param y? integer the vertical coordinate of the top-left corner (default 50)
+--- @param width? integer the width in pixels of the text area (if 0, it will be ajusted to the text width) (default 0)
+--- @param height? integer the height in pixels of the text area (if 0, it will be ajusted to the text height) (default 0)
+--- @param backgroundColor? integer the background color of the text area (default 0x324650)
+--- @param borderColor? integer the border color of the text area (default 0)
+--- @param backgroundAlpha? number the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
+--- @param fixedPos? boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
 function ui.addTextArea(id,text,targetPlayer,x,y,width,height,backgroundColor,borderColor,backgroundAlpha,fixedPos) end
 
 --- Removes a text area.
 --- @param id integer the identifier of the text area
---- @param targetPlayer string the player whom the text area will disappear (if nil, applies to all players) (default nil)
+--- @param targetPlayer? string the player whom the text area will disappear (if nil, applies to all players) (default nil)
 function ui.removeTextArea(id,targetPlayer) end
 
 --- Sets the map name.
@@ -435,13 +437,13 @@ function ui.setShamanName(text) end
 
 --- Displays a color picker.
 --- @param id integer the identifier of the color picker
---- @param targetPlayer string the player who will see the color picker (if nil, applies to all players) (default nil)
---- @param defaultColor integer the default color on the color picker (default 0)
---- @param title string the title of the color picker (default nil)
+--- @param targetPlayer? string the player who will see the color picker (if nil, applies to all players) (default nil)
+--- @param defaultColor? integer the default color on the color picker (default 0)
+--- @param title? string the title of the color picker (default nil)
 function ui.showColorPicker(id,targetPlayer,defaultColor,title) end
 
 --- Updates the content of a text area.
 --- @param id integer the identifier of the text area
 --- @param text string the new text to display
---- @param targetPlayer string the player who will get displayed the new text (if nil, applies to all players) (default nil)
+--- @param targetPlayer? string the player who will get displayed the new text (if nil, applies to all players) (default nil)
 function ui.updateTextArea(id,text,targetPlayer) end
