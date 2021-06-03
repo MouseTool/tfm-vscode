@@ -4,5 +4,8 @@
         "io": "disable",
         "debug": "disable",
         "os": "disable"
+    },
+    "files.associations": {
+        "*.generated": "lua"
     }
 }
