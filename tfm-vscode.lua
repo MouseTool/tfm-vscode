@@ -295,6 +295,7 @@ function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,yS
 --- @param attach? boolean whether the balloon should be attached (default true)
 --- @param colorType? integer the color type of the balloon (between 1 and 4) (default 1)
 --- @param ghost? boolean whether the spawned balloon should be transparent (default false)
+--- @return integer @the shaman object identifier of the balloon
 function tfm.exec.attachBalloon(playerName,attach,colorType,ghost) end
 
 --- Changes the size of a player.
