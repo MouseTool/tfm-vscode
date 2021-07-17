@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class float:number @Floating-point precision decimal number
 --- @class XYString:string @String coordinates in the `x,y` format
 
