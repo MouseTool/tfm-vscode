@@ -40,24 +40,24 @@ class TfmFunction {
     }
 
     /**
-     * 
-     * @param {Param} param 
+     *
+     * @param {Param} param
      */
     addParam(param) {
         this.params.push(param);
     }
 
     /**
-     * 
-     * @param {string} description 
+     *
+     * @param {string} description
      */
     setDescription(description) {
         this.description = description;
     }
 
     /**
-     * 
-     * @param {Param} type 
+     *
+     * @param {Param} type
      */
     setType(type) {
         this.type = type;
@@ -69,15 +69,15 @@ const FUNC_PARAM_REGEX = /^ {2}([a-zA-Z0-9]+) \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
 const FUNC_RETURNS_REGEX = /^Returns \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
 
 /**
- * 
- * @param {string} content 
+ *
+ * @param {string} content
  */
 function parseFunctions(content) {
     var lines = content.split(/\r?\n/);
     var funcs = [];
     var currentFunc = null;
     var currentParam = null;
-    
+
     var endParam = function() {
         if (currentParam) {
             currentFunc.addParam(currentParam);
@@ -133,8 +133,8 @@ const MAP_TO_EMMYLUA = {
 }
 
 /**
- * 
- * @param {TfmFunction[]} funcs 
+ *
+ * @param {TfmFunction[]} funcs
  */
 function generateDocs(funcs) {
     var new_lines = [];
@@ -160,7 +160,7 @@ function generateDocs(funcs) {
         new_lines.push("");
     }
 
-    fs.writeFileSync('gen.lua', new_lines.join("\n"));
+    fs.writeFileSync('gen.lua.generated', new_lines.join("\n"));
 }
 
 var buf = fs.readFile('luahelp_funcs.txt', 'utf8', (err, data) => {

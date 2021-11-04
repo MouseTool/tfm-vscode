@@ -95,6 +95,7 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 ---     - !foregroundLayerDepth
 ---     - &fixedLayerDepthBeforeLuaInterfaces
 ---     - :fixedLayerDepthBehindLuaInterfaces
+---     - +physicObjectId
 --- @param xPosition? integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
 --- @param yPosition? integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
 --- @param targetPlayer? string the player who will see the image (if nil, applies to all players) (default nil)
@@ -140,15 +141,17 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default 0)
 --- @param ySpeed? integer the vertical speed of the object (default 0)
 --- @param ghost? boolean whether the spawned object should be transparent (default false)
+--- @param options table fixedXSpeed (Number), fixedYSpeed (Number)
 --- @return integer @the shaman object identifier
-function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost) end
+function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost,options) end
 
 --- Tie a player to a balloon.
 --- @param playerName string the player's nickname
 --- @param yes? boolean Attach or dettach the balloon. (default true)
 --- @param color? integer Balloon color [1-4]. (default 1)
 --- @param transparent? boolean Make the balloon transparent. (default false)
-function tfm.exec.attachBalloon(playerName,yes,color,transparent) end
+--- @param speed? number Balloon speed. (default 1)
+function tfm.exec.attachBalloon(playerName,yes,color,transparent,speed) end
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname

@@ -127,6 +127,10 @@ tfm.enum = {}
 --- @field linearDamping float
 --- @field angularDamping float
 
+--- @class ShamanObjOpt
+--- @field fixedXSpeed float
+--- @field fixedYSpeed float
+
 --- @class TfmGet @Transformice metadata
 --- @field misc TfmMisc
 --- @field room TfmRoom
@@ -255,6 +259,7 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 ---     - !foregroundLayerDepth
 ---     - &fixedLayerDepthBeforeLuaInterfaces
 ---     - :fixedLayerDepthBehindLuaInterfaces
+---     - +physicObjectId
 --- @param xPosition? integer the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default 0)
 --- @param yPosition? integer the vertical offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default 0)
 --- @param targetPlayer? string the player who will see the image (if nil, applies to all players) (default nil)
@@ -289,16 +294,18 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default 0)
 --- @param ySpeed? integer the vertical speed of the object (default 0)
 --- @param ghost? boolean whether the spawned object should be transparent (default false)
+--- @param options? table the shaman object description (table)
 --- @return integer @the shaman object identifier
-function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost) end
+function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost,options) end
 
 --- Spawns and attaches a ghost balloon to a player, or detaches all balloons.
 --- @param playerName string the player's nickname
 --- @param attach? boolean whether the balloon should be attached (default true)
 --- @param colorType? integer the color type of the balloon (between 1 and 4) (default 1)
 --- @param ghost? boolean whether the spawned balloon should be transparent (default false)
+--- @param speed? number the vertical speed of the balloon (default 1)
 --- @return integer @the shaman object identifier of the balloon
-function tfm.exec.attachBalloon(playerName,attach,colorType,ghost) end
+function tfm.exec.attachBalloon(playerName,attach,colorType,ghost,speed) end
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname

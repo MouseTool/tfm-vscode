@@ -312,7 +312,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.42
+      transformiceVersion : 7.67
     room
       community : -
       currentMap : 0
@@ -355,7 +355,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1622726047483
+          registrationDate : 1636040252200
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -619,6 +619,7 @@ Displays an image on the map.
     - !foregroundLayerDepth
     - &fixedLayerDepthBeforeLuaInterfaces
     - :fixedLayerDepthBehindLuaInterfaces
+    - +physicObjectId
   xPosition (Int) the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
   yPosition (Int) the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
   targetPlayer (String) the player who will see the image (if nil, applies to all players) (default nil)
@@ -655,7 +656,7 @@ Spawns a ground.
     - type (Int), width (Int), height (Int), foreground (Boolean), friction (Float), restitution (Float), angle (Int), color (Int), miceCollision (Boolean), groundCollision (Boolean)
     - dynamic (Boolean), fixedRotation (Boolean), mass (Int), linearDamping (Float), angularDamping (Float) for dynamic grounds
 
-tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost)
+tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost, options)
 Spawns a shaman object.
   objectType (Int) the type of the shaman object to spawn
   xPosition (Int) the horizontal position of the spawn
@@ -664,14 +665,16 @@ Spawns a shaman object.
   xSpeed (Int) the horizontal speed of the object (default 0)
   ySpeed (Int) the vertical speed of the object (default 0)
   ghost (Boolean) whether the spawned object should be transparent (default false)
+  options (Table) fixedXSpeed (Number), fixedYSpeed (Number)
 Returns (Int) the shaman object identifier
 
-tfm.exec.attachBalloon(playerName, yes, color, transparent)
+tfm.exec.attachBalloon(playerName, yes, color, transparent, speed)
 Tie a player to a balloon.
   playerName (String) the player's nickname
   yes (Boolean) Attach or dettach the balloon. (default true)
   color (Int) Balloon color [1-4]. (default 1)
   transparent (Boolean) Make the balloon transparent. (default false)
+  speed (Number) Balloon speed. (default 1)
 
 tfm.exec.changePlayerSize(playerName, size)
 Changes the size of a player.
