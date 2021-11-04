@@ -294,7 +294,7 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default 0)
 --- @param ySpeed? integer the vertical speed of the object (default 0)
 --- @param ghost? boolean whether the spawned object should be transparent (default false)
---- @param options? table the shaman object description (table)
+--- @param options? ShamanObjOpt the shaman object description (table)
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost,options) end
 
