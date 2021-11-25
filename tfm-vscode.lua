@@ -589,6 +589,10 @@ function ui.addTextArea(id,text,targetPlayer,x,y,width,height,backgroundColor,bo
 --- @param targetPlayer? string the player whom the text area will disappear (if nil, applies to all players) (default nil)
 function ui.removeTextArea(id,targetPlayer) end
 
+--- Sets the map background color.
+--- @param color? string the background color, in hex code format (default "#6A7495")
+function ui.setBackgroundColor(color) end
+
 --- Sets the map name.
 --- @param text string the text to display as the map name
 function ui.setMapName(text) end

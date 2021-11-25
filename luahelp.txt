@@ -312,7 +312,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.67
+      transformiceVersion : 7.72
     room
       community : -
       currentMap : 0
@@ -355,7 +355,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1636040252200
+          registrationDate : 1637851981176
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -374,6 +374,7 @@ ui
   addPopup
   addTextArea
   removeTextArea
+  setBackgroundColor
   setMapName
   setShamanName
   showColorPicker
@@ -952,6 +953,10 @@ ui.removeTextArea(id, targetPlayer)
 Removes a text area.
   id (Int) the identifier of the text area
   targetPlayer (String) the player whom the text area will disappear (if nil, applies to all players) (default nil)
+
+ui.setBackgroundColor(color)
+Set the background color. Last one game.
+  color (String) Background color. (default "#6A7495")
 
 ui.setMapName(text)
 Sets the map name.
