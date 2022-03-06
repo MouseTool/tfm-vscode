@@ -1,166 +1,9 @@
---- @meta
-
---- @class float:number @Floating-point precision decimal number
---- @class XYString:string @String coordinates in the `x,y` format
-
---- @class debuglibtfm
-debug = {}
-
---- @class oslibtfm
-os = {}
-
---- Global Transformice namespace
-tfm = {}
-
---- Transformice enumerations table
-tfm.enum = {}
-
---- @class TfmMisc
---- @field apiVersion string
---- @field transformiceVersion float
-
---- @class TfmShamanObject
---- @field angle integer
---- @field baseType integer
---- @field colors string[]
---- @field ghost boolean
---- @field id integer
---- @field type integer
---- @field vx integer @The horizontal speed of the object.
---- @field vy integer @The vertical speed of the object.
---- @field x integer @The horizontal coordinate of the object.
---- @field y integer @The vertical coordinate of the object.
-
---- @class TfmPlayer
---- @field cheeses integer @The number of cheeses that the player is carrying. This property is useful in multiple-cheese maps (dodue).
---- @field community string @The legacy community of the player. This exists for backward compatibility, consider using `language` instead.
---- @field gender integer
---- @field hasCheese boolean
---- @field id integer
---- @field inHardMode integer @Deprecated. Use `shamanMode` instead.
---- @field isDead boolean
---- @field isFacingRight boolean
---- @field isInvoking boolean
---- @field isJumping boolean
---- @field isShaman boolean
---- @field isVampire boolean
---- @field language string
---- @field look string
---- @field movingLeft boolean
---- @field movingRight boolean
---- @field playerName string
---- @field registrationDate integer
---- @field score integer
---- @field shamanMode integer
---- @field spouseId integer
---- @field spouseName string
---- @field title integer
---- @field tribeId integer
---- @field tribeName string
---- @field vx integer @The horizontal speed of the player.
---- @field vy integer @The vertical speed of the player.
---- @field x integer @The horizontal coordinate of the player.
---- @field y integer @The vertical coordinate of the player.
-
---- @class XmlMapInfo
---- @field author string
---- @field mapCode integer
---- @field permCode integer
---- @field xml string
-
---- @class TfmRoom
---- @field community string @The legacy community of the room. This exists for backward compatibility, consider using `language` instead.
---- @field currentMap string
---- @field isTribeHouse boolean
---- @field language string
---- @field maxPlayers integer
---- @field mirroredMap boolean
---- @field name string
---- @field objectList table<integer, TfmShamanObject> @<objectId, objectMeta>
---- @field passwordProtected boolean
---- @field playerList table<string, TfmPlayer> @<playerName, playerMeta>
---- @field uniquePlayers integer|nil @The number of unique IP addresses in the room. Module team only.
---- @field xmlMapInfo XmlMapInfo|nil
-
---- @alias JointType
----| '0' # distance joint
----| '1' # prismatic joint
----| '2' # pulley joint
----| '3' # revolute joint
-
--- NOTE: to remove joint custom type description when/if lua-vscode
--- supports expanding alias description of fields
---- @class JointDef
---- @field type JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
---- @field point1 XYString @location of the ground1 anchor (default: the ground1's center)
---- @field point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
---- @field point3 XYString @location of the pulley's first anchor, only used with pulley joints
---- @field point4 XYString @location of the pulley's second anchor, only used with pulley joints
---- @field frequency float @distance joints' frequency
---- @field damping float @distance joints' damping ratio
---- @field axis XYString @prismatic joints' axis
---- @field angle XYString @prismatic joints' angle
---- @field limit1 float @prismatic and revolute joints' translation/rotation first limit
---- @field limit2 float @prismatic and revolute joints' translation/rotation second limit
---- @field forceMotor float @prismatic and revolute joints' motor power
---- @field speedMotor float @prismatic and revolute joints' motor speed
---- @field ratio float @revolute joints' ratio
---- @field line integer @draw line's thickness
---- @field color integer float @draw line's color
---- @field alpha float @draw line's opacity
---- @field foreground boolean @whether the draw line is foreground
-
---- @class BodyDef
---- @field type integer
---- @field width integer
---- @field height integer
---- @field foreground boolean
---- @field friction float
---- @field restitution float
---- @field angle integer
---- @field color integer
---- @field miceCollision boolean
---- @field groundCollision boolean
---- @field dynamic boolean
---- @field fixedRotation boolean
---- @field mass integer
---- @field linearDamping float
---- @field angularDamping float
-
---- @class ShamanObjOpt
---- @field fixedXSpeed float
---- @field fixedYSpeed float
-
---- @class TfmGet @Transformice metadata
---- @field misc TfmMisc
---- @field room TfmRoom
-tfm.get = {}
-
---- Transformice system namespace
-system = {}
-
--- Transformice user interface namespace
-ui = {}
-
---- @class TfmExec
---- Transformice exec namespace
-tfm.exec = {}
-
 --- Deactivates the events log.
 --- @param activate? boolean whether it should be active (default true)
 function debug.disableEventLog(activate) end
 
---- Gets the current lua thread name.
---- @return string @the current thread name
+--- Get current lua thread name.
 function debug.getCurrentThreadName() end
-
---- Returns a string with a traceback of the call stack. The optional message string is appended at the beginning of the traceback.
----
---- [View documents](command:extension.lua.doc?["en-US/52/manual.html/pdf-debug.traceback"])
---- @param message? any
---- @param level?   integer
---- @return string  message
-function debug.traceback(message, level) end
 
 --- Listens to the player's keyboard events.
 --- @param playerName string the player you want to listen keyboard events from
@@ -169,42 +12,43 @@ function debug.traceback(message, level) end
 ---     - regular AS3 keycodes can be found on http://help.adobe.com/fr_FR/FlashPlatform/reference/actionscript/3/flash/ui/Keyboard.html
 --- @param down boolean whether it should listen for the press event, or the release one
 --- @param activate? boolean whether it should be active (default true)
-function system.bindKeyboard(playerName,keyCode,down,activate) end
+function system.bindKeyboard(playerName, keyCode, down, activate) end
 
 --- Listens to a player's mouse events.
 --- @param playerName string the player you want to listen mouse events from
 --- @param active? boolean whether it should be active (default true)
-function system.bindMouse(playerName,active) end
+function system.bindMouse(playerName, active) end
 
 --- Prevents a module command (commands starting with « ! ») to be displayed in the room. If the supplied command is nil, the parameter will apply to all the commands.
 --- @param command? string the command (without the initial « ! ») to hide (default nil)
---- @param hide? boolean whether the command should be hidden (default true)
-function system.disableChatCommandDisplay(command,hide) end
+--- @param hide? boolean whether the command should be hided (default true)
+function system.disableChatCommandDisplay(command, hide) end
 
 --- Deactivates the lua script running.
 function system.exit() end
 
 --- Gives an event reward to the targeted player.
---- Event elevation only.
 --- @param playerName string the player to give the gift to
 --- @param giftCode string the gift identifier (given by an admin)
-function system.giveEventGift(playerName,giftCode) end
+function system.giveEventGift(playerName, giftCode) end
 
 --- Requests the loading of a data file. The event eventFileLoaded is triggered when the file gets loaded.
---- Module team only.
 --- @param fileNumber? integer the identifier of the file to load (default 0)
 --- @return boolean @whether the loading got started
 function system.loadFile(fileNumber) end
 
 --- Requests the loading of the player's data for this module. The event eventPlayerDataLoaded is triggered when the player data gets loaded.
---- Module team only.
 --- @param playerName string the player about whom you want to get the data
 --- @return boolean @whether the loading got started
 function system.loadPlayerData(playerName) end
 
+--- Set or get the timer interval between two events.
+--- @param interval integer Timer interval in min (default 40 min), can't be less than 40 min.
+--- @param random integer Random added  interval in min (default 20 min).
+function system.luaEventLaunchInterval(interval, random) end
+
 --- Creates a new timer to call a function after a delay, once or continuously.
---- Module team only.
---- @param callback fun(timerId:integer, arg1?:any, arg2?:any, arg3?:any, arg4?:any) The function to call. The first argument of this function is the timer's identifier
+--- @param callback function The function to call
 --- @param time integer the number of milliseconds that the function call should be delayed by
 --- @param loop? boolean whether the function call should loop or happen only once (default false)
 --- @param arg1? any 1st argument of the callback function (default nil)
@@ -212,46 +56,48 @@ function system.loadPlayerData(playerName) end
 --- @param arg3? any 3rd argument of the callback function (default nil)
 --- @param arg4? any 4th argument of the callback function (default nil)
 --- @return integer @the new timer id
-function system.newTimer(callback,time,loop,arg1,arg2,arg3,arg4) end
+function system.newTimer(callback, time, loop, arg1, arg2, arg3, arg4) end
 
 --- Destroys a timer.
---- Module team only.
 --- @param timerId integer the identifier of the timer to stop
 function system.removeTimer(timerId) end
 
 --- Requests the saving of a data file (throttled to one per minute). The event eventFileSaved is triggered when the file get saved.
---- Module team only.
 --- @param data string the data to store in the file
 --- @param fileNumber? integer the identifier (from 0 to 99) of the file to write the data in (default 0)
 --- @return boolean @whether the saving got started
-function system.saveFile(data,fileNumber) end
+function system.saveFile(data, fileNumber) end
 
 --- Saves module data about a player. Please note that this data is per player and per Lua dev, so take care not to overwrite data from another one of your modules.
---- Module team only.
 --- @param playerName string the player about whom you want to save data
 --- @param data string the player data to save
-function system.savePlayerData(playerName,data) end
+function system.savePlayerData(playerName, data) end
 
---- Adds a defilante bonus (token) to the map.
---- @param type? integer bonus type (see tfm.enum.bonus) (default 1)
---- @param xPosition? integer the horizontal coordinate of the bonus (default 0)
---- @param yPosition? integer the vertical coordinate of the bonus (default 0)
---- @param id? integer the identifier of the bonus (default 0)
---- @param angle? integer the angle of the bonus (default 0)
---- @param visible? boolean whether the bonus should be visible (default true)
---- @param targetPlayer? string the player who should see the bonus (if nil, applies to all players) (default nil)
-function tfm.exec.addBonus(type,xPosition,yPosition,id,angle,visible,targetPlayer) end
+--- Set the login event banner.
+--- @param bannerId integer Banner id.
+function system.setLuaEventBanner(bannerId) end
+
+--- Add defilante bonus.
+--- @param type? integer Bonus type (see tfm.enum.bonus) (default 1)
+--- @param x? integer X position. (default 0)
+--- @param y? integer Y position. (default 0)
+--- @param id? integer Identifier. (default 0)
+--- @param angle? integer Angle (deg). (default 0)
+--- @param visible? boolean Make the bonus visible or not. (default true)
+--- @param targetPlayer? string Send only to this specific player. (default nil)
+function tfm.exec.addBonus(type, x, y, id, angle, visible, targetPlayer) end
 
 --- Adds conjuration to the map. Note: Grid coordinate are regular coordinate divided by 10 (as conjuration is a 10x10 pixel square).
 --- @param xPosition integer the horizontal grid coordinate of the conjuration
 --- @param yPosition integer the vertical grid coordinate of the conjuration
 --- @param duration? integer the duration of the conjuration in milliseconds (default 10000)
-function tfm.exec.addConjuration(xPosition,yPosition,duration) end
+function tfm.exec.addConjuration(xPosition, yPosition, duration) end
 
 --- Displays an image on the map.
 --- @param imageId string the image identifier
 --- @param target string the game element to attach the image to
 ---     - #mobileId
+---     - =mobileId (keep current sprite)
 ---     - $playerName (on the mouse sprite)
 ---     - %playerName (with the mouse sprite removed)
 ---     - ?backgroundLayerDepth
@@ -259,32 +105,44 @@ function tfm.exec.addConjuration(xPosition,yPosition,duration) end
 ---     - !foregroundLayerDepth
 ---     - &fixedLayerDepthBeforeLuaInterfaces
 ---     - :fixedLayerDepthBehindLuaInterfaces
+---     - ~fixedLayerDepthWithLuaInterfaces
 ---     - +physicObjectId
---- @param xPosition? integer the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default 0)
---- @param yPosition? integer the vertical offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default 0)
+--- @param xPosition? integer the horizontal offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
+--- @param yPosition? integer the vertical offset of the top-left corner of the image (0 being the middle of the game element) (default 0)
 --- @param targetPlayer? string the player who will see the image (if nil, applies to all players) (default nil)
---- @param xScale? float the horizontal (width) scale of the image (default 1)
---- @param yScale? float the vertical (height) scale of the image (default 1)
---- @param angle? float the rotation angle about anchor of the image, in radians (default 0)
---- @param alpha? float the opacity of the image, from 0 (transparent) to 1 (opaque) (default 1)
---- @param xAnchor? float the horizontal offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the left of the image) (default 0)
---- @param yAnchor? float the vertical offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the top of the image) (default 0)
+--- @param scaleX? number Image scale X (default 1)
+--- @param scaleY? number Image scale Y (default 1)
+--- @param rotation? number Image rotation in radian (default 0)
+--- @param alpha? number Image alpha (default 1)
+--- @param anchorX? number Image anchor X (0..1) (default 0)
+--- @param anchorY? number Image anchor Y (0..1) (default 0)
 --- @return integer @the image identifier
-function tfm.exec.addImage(imageId,target,xPosition,yPosition,targetPlayer,xScale,yScale,angle,alpha,xAnchor,yAnchor) end
+function tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, scaleX, scaleY, rotation, alpha, anchorX, anchorY) end
 
 --- Adds a joint between two physic objects. . Note: In map XML codes, you can also add a « lua="id" » property in a joint definition to be able to interact with it with LUA code.
 --- @param id integer the identifier of the joint
 --- @param ground1 integer the first ground the joint will affect
 --- @param ground2 integer the second ground the joint will affect
---- @param jointDef JointDef the ground description (table)
-function tfm.exec.addJoint(id,ground1,ground2,jointDef) end
+--- @param jointDef table the ground description
+---     - type (Int): 0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
+---     - point1 (String "x,y"): location of the ground1 anchor (default: the ground1's center)
+---     - point2 (String "x,y"): location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
+---     - point3 (String "x,y"), point4 (String "x,y"): locations of the pulley's anchors, only used with pulley joints
+---     - frequency (Float), damping (Float): distance joints' frequency and damping ratio
+---     - axis (String "x,y"), angle (Int): prismatic joints' axis and angle
+---     - limit1 (Float), limit2 (Float), forceMotor (Float), speedMotor (Float): prismatic and revolute joints' translation/rotation limits and motors
+---     - ratio (Float): revolute joints' ratio
+---     - line (Int), color (Int), alpha (Float), foreground (Boolean): if none of these properties is defined, the joint won't be drawn
+function tfm.exec.addJoint(id, ground1, ground2, jointDef) end
 
 --- Spawns a ground.
 --- @param id integer the identifier of the physic object
 --- @param xPosition integer the horizontal coordinate of the center of the ground
 --- @param yPosition integer the vertical coordinate of the center of the ground
---- @param bodyDef BodyDef the ground description (table)
-function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
+--- @param bodyDef table the ground description
+---     - type (Int), width (Int), height (Int), foreground (Boolean), friction (Float), restitution (Float), angle (Int), color (Int), miceCollision (Boolean), groundCollision (Boolean)
+---     - dynamic (Boolean), fixedRotation (Boolean), mass (Int), linearDamping (Float), angularDamping (Float) for dynamic grounds, contactListener (Boolean)
+function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
 
 --- Spawns a shaman object.
 --- @param objectType integer the type of the shaman object to spawn
@@ -294,29 +152,27 @@ function tfm.exec.addPhysicObject(id,xPosition,yPosition,bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default 0)
 --- @param ySpeed? integer the vertical speed of the object (default 0)
 --- @param ghost? boolean whether the spawned object should be transparent (default false)
---- @param options? ShamanObjOpt the shaman object description (table)
+--- @param options table fixedXSpeed (Number), fixedYSpeed (Number)
 --- @return integer @the shaman object identifier
-function tfm.exec.addShamanObject(objectType,xPosition,yPosition,angle,xSpeed,ySpeed,ghost,options) end
+function tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost, options) end
 
---- Spawns and attaches a ghost balloon to a player, or detaches all balloons.
+--- Tie a player to a balloon.
 --- @param playerName string the player's nickname
---- @param attach? boolean whether the balloon should be attached (default true)
---- @param colorType? integer the color type of the balloon (between 1 and 4) (default 1)
---- @param ghost? boolean whether the spawned balloon should be transparent (default false)
---- @param speed? number the vertical speed of the balloon (default 1)
---- @return integer @the shaman object identifier of the balloon
-function tfm.exec.attachBalloon(playerName,attach,colorType,ghost,speed) end
+--- @param yes? boolean Attach or dettach the balloon. (default true)
+--- @param color? integer Balloon color [1-4]. (default 1)
+--- @param transparent? boolean Make the balloon transparent. (default false)
+--- @param speed? number Balloon speed. (default 1)
+function tfm.exec.attachBalloon(playerName, yes, color, transparent, speed) end
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
 --- @param size? number the new size of the player (between 0.1 and 5) (default 1)
-function tfm.exec.changePlayerSize(playerName,size) end
+function tfm.exec.changePlayerSize(playerName, size) end
 
 --- Displays a chat message.
---- Module team only.
 --- @param message string the chat message to display
 --- @param playerName? string the player who will get the message (if nil, applies to all players) (default nil)
-function tfm.exec.chatMessage(message,playerName) end
+function tfm.exec.chatMessage(message, playerName) end
 
 --- Deactivates the automatic afk death.
 --- @param activate? boolean whether the deactivation should be active (default true)
@@ -375,7 +231,7 @@ function tfm.exec.disableWatchCommand(activate) end
 --- @param xAcceleration? number the horizontal acceleration of the particle (default 0)
 --- @param yAcceleration? number the vertical acceleration of the particle (default 0)
 --- @param targetPlayer? string the player who should see the particle (if nil, applies to all players) (default nil)
-function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed,xAcceleration,yAcceleration,targetPlayer) end
+function tfm.exec.displayParticle(particleType, xPosition, yPosition, xSpeed, ySpeed, xAcceleration, yAcceleration, targetPlayer) end
 
 --- Throws an explosion.
 --- @param xPosition integer the horizontal coordinate of the center of the explosion
@@ -383,16 +239,15 @@ function tfm.exec.displayParticle(particleType,xPosition,yPosition,xSpeed,ySpeed
 --- @param power integer the maximum power of the explosion
 --- @param radius integer the explosion radius (players further away won't be affected)
 --- @param miceOnly? boolean whether the explosion should affect only mice, or objects too (default false)
-function tfm.exec.explosion(xPosition,yPosition,power,radius,miceOnly) end
+function tfm.exec.explosion(xPosition, yPosition, power, radius, miceOnly) end
 
---- Freezes the selected player.
---- @param playerName string the player to freeze
---- @param freeze? boolean whether the player should be frozen (default true)
-function tfm.exec.freezePlayer(playerName,freeze) end
+--- Froze a player.
+--- @param playerName string the player's nickname
+--- @param freeze? boolean Freeze or unfreeze (default true)
+--- @param displayIce? boolean Display or not ice on the mouse. (default true)
+function tfm.exec.freezePlayer(playerName, freeze, displayIce) end
 
---- Gets the player who is the room's current synchronizer.
---- Module team only.
---- @return string @the player's nickname
+--- Get current player sync.
 function tfm.exec.getPlayerSync() end
 
 --- Gives the cheese to a player.
@@ -403,17 +258,17 @@ function tfm.exec.giveCheese(playerName) end
 --- @param playerName string the player to give the gift to
 --- @param consumableId string the consumable identifier
 --- @param amount? string the amount of consumables to give (default "1")
-function tfm.exec.giveConsumables(playerName,consumableId,amount) end
+function tfm.exec.giveConsumables(playerName, consumableId, amount) end
 
 --- Gives the meep competence to a player, or removes it.
 --- @param playerName string the player's nickname
 --- @param canMeep? boolean whether the player should be able to meep (default true)
-function tfm.exec.giveMeep(playerName,canMeep) end
+function tfm.exec.giveMeep(playerName, canMeep) end
 
 --- Gives the transformations to a player, or removes them.
 --- @param playerName string the player's nickname
 --- @param canTransform? boolean whether the player should be able to use transformations (default true)
-function tfm.exec.giveTransformations(playerName,canTransform) end
+function tfm.exec.giveTransformations(playerName, canTransform) end
 
 --- Kills the selected player.
 --- @param playerName string the player to kill
@@ -423,10 +278,9 @@ function tfm.exec.killPlayer(playerName) end
 --- @param playerName1 string the first player's nickname
 --- @param playerName2 string the second player's nickname
 --- @param linked? boolean whether the two players should be linked (default true)
-function tfm.exec.linkMice(playerName1,playerName2,linked) end
+function tfm.exec.linkMice(playerName1, playerName2, linked) end
 
 --- Lowers the synchronization delay of a player to 400ms max
---- Module team only.
 --- @param playerName string the player who should have a lower sync delay
 function tfm.exec.lowerSyncDelay(playerName) end
 
@@ -438,19 +292,19 @@ function tfm.exec.lowerSyncDelay(playerName) end
 --- @param xSpeed? integer the horizontal coordinate of the speed to give to the object (default 0)
 --- @param ySpeed? integer the vertical coordinate of the speed to give to the object (default 0)
 --- @param speedOffset? boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
---- @param angle? integer the angle of the object (default 0)
+--- @param angle? integer the angle of the the object (default 0)
 --- @param angleOffset? boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
-function tfm.exec.moveObject(objectId,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset,angle,angleOffset) end
+function tfm.exec.moveObject(objectId, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset, angle, angleOffset) end
 
 --- Defines the speed and position of a player.
 --- @param playerName string the player to move
 --- @param xPosition integer the horizontal coordinate of the point where the player will be moved
 --- @param yPosition integer the vertical coordinate of the point where the player will be moved
---- @param positionOffset? boolean whether the specified position is an offset to apply to the current one, or the absolute one (default false)
+--- @param positionOffset? boolean whether the specified position an offset to apply to the current one, or the absolute one (default false)
 --- @param xSpeed? integer the horizontal coordinate of the speed to give to the player (default 0)
 --- @param ySpeed? integer the vertical coordinate of the speed to give to the player (default 0)
---- @param speedOffset? boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
-function tfm.exec.movePlayer(playerName,xPosition,yPosition,positionOffset,xSpeed,ySpeed,speedOffset) end
+--- @param speedOffset? boolean whether the specified speed an offset to apply to the current one, or the absolute one (default false)
+function tfm.exec.movePlayer(playerName, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset) end
 
 --- Starts a new game
 --- @param mapCode? string the map code (default nil)
@@ -460,22 +314,22 @@ function tfm.exec.movePlayer(playerName,xPosition,yPosition,positionOffset,xSpee
 ---     - #4 (perm category map)
 ---     - anything beginning with '<' (xml map)
 --- @param flipped? boolean whether the map should be flipped (default nil (randomly mirrored in racing and bootcamp rooms, unless))
-function tfm.exec.newGame(mapCode,flipped) end
+function tfm.exec.newGame(mapCode, flipped) end
 
 --- Makes a player do an emote.
 --- @param playerName string the player who should do the emote
 --- @param emoteId integer the emote to do
 --- @param emoteArg? string the emote attribute (for the flag emote for example) (default nil)
-function tfm.exec.playEmote(playerName,emoteId,emoteArg) end
+function tfm.exec.playEmote(playerName, emoteId, emoteArg) end
 
 --- Makes a player enter the hole. It only works if the player already has a cheese!
 --- @param playerName string the player who should win
 function tfm.exec.playerVictory(playerName) end
 
---- Removes a defilante bonus (token).
---- @param id? integer the identifier of the bonus (default 0)
---- @param targetPlayer? string the player whom should have the bonus removed (if nil, applies to all players) (default nil)
-function tfm.exec.removeBonus(id,targetPlayer) end
+--- Remove a defilante bonus.
+--- @param id? integer Identifier. (default 0)
+--- @param targetPlayer? string Send only to this specific player. (default nil)
+function tfm.exec.removeBonus(id, targetPlayer) end
 
 --- Takes away the cheese from a player.
 --- @param playerName string the player who should get their cheese removed
@@ -501,6 +355,12 @@ function tfm.exec.removePhysicObject(id) end
 --- @param playerName string the player to respawn
 function tfm.exec.respawnPlayer(playerName) end
 
+--- Enable 'Aie' mode when mice can die when they hit something too hard. Last until the next map.
+--- @param enable? boolean Enabled or disable 'Aie' mode. (default true)
+--- @param sensibility? number Sensibility of the 'Aie' mode. (default 1)
+--- @param targetPlayer? string Target player (nil for all player in room). (default nil)
+function tfm.exec.setAieMode(enable, sensibility, targetPlayer) end
+
 --- Sets whether the following maps should be flipped (always, never, or TFM's default behaviour).
 --- @param flipped? boolean whether the maps should be flipped (default nil (the default TFM behaviour))
 function tfm.exec.setAutoMapFlipMode(flipped) end
@@ -508,22 +368,31 @@ function tfm.exec.setAutoMapFlipMode(flipped) end
 --- Sets the game remaining time.
 --- @param time integer the remaining time in seconds
 --- @param init? boolean whether the remaining time should change even if the specified remaining time is higher than the current one (default true)
-function tfm.exec.setGameTime(time,init) end
+function tfm.exec.setGameTime(time, init) end
 
 --- Changes a player's nickname's color.
 --- @param playerName string the player whose nickname  should be colored
 --- @param color integer the color of the nickname
-function tfm.exec.setNameColor(playerName,color) end
+function tfm.exec.setNameColor(playerName, color) end
+
+--- Set the world gravity scale for a player.
+--- @param playerName string Targeted player name.
+--- @param gravityScale? number Gravity scale value. (default 1)
+function tfm.exec.setPlayerGravityScale(playerName, gravityScale) end
+
+--- Set the night mode for a player.
+--- @param nightMode? boolean Enable or disable the night mode. (default true)
+--- @param playerName string Targeted player name. If nil affect all player in room.
+function tfm.exec.setPlayerNightMode(nightMode, playerName) end
 
 --- Sets the player's score.
 --- @param playerName string the player who should get his or her score changed
 --- @param score integer the score
 --- @param add? boolean whether the current score should be added to the specified one (default false)
-function tfm.exec.setPlayerScore(playerName,score,add) end
+function tfm.exec.setPlayerScore(playerName, score, add) end
 
---- Changes the room's current synchronizer (or resets it).
---- Module team only.
---- @param playerName? string the player who should become the room sync (use nil to let the server decide) (default nil)
+--- Set current player sync.
+--- @param playerName string Target player name (Nil to let the server decide).
 function tfm.exec.setPlayerSync(playerName) end
 
 --- Sets the max number of players in a room.
@@ -537,27 +406,27 @@ function tfm.exec.setRoomPassword(password) end
 --- Makes a player a shaman.
 --- @param playerName string the player who should become a shaman
 --- @param makeAShaman? boolean whether the player should be a shaman (default true)
-function tfm.exec.setShaman(playerName,makeAShaman) end
+function tfm.exec.setShaman(playerName, makeAShaman) end
 
 --- Changes the shaman mode of a player.
 --- @param playerName string the player's nickname who will have another shaman mode
 --- @param mode? integer the new shaman mode of the target (use nil to use the player's real mode) (default nil)
-function tfm.exec.setShamanMode(playerName,mode) end
+function tfm.exec.setShamanMode(playerName, mode) end
 
 --- Makes a player a vampire.
 --- @param playerName string the player to make a vampire
 --- @param makeAVampire? boolean whether the player should be a vampire (default true)
-function tfm.exec.setVampirePlayer(playerName,makeAVampire) end
+function tfm.exec.setVampirePlayer(playerName, makeAVampire) end
 
---- Changes the world acceleration along the horizontal (wind) and vertical (gravity) axes.
---- @param xAcceleration? integer the horizontal acceleration of the world (default 0)
---- @param yAcceleration? integer the vertical acceleration of the world (default 10)
-function tfm.exec.setWorldGravity(xAcceleration,yAcceleration) end
+--- Set the world gravity.
+--- @param x? integer Gravity on x axis. (default 0)
+--- @param y? integer Gravity on y axis (default 10)
+function tfm.exec.setWorldGravity(x, y) end
 
 --- Makes the snow fall.
 --- @param duration? integer the snowfall duration in seconds (default 60)
 --- @param snowballPower? integer  (default 10)
-function tfm.exec.snow(duration,snowballPower) end
+function tfm.exec.snow(duration, snowballPower) end
 
 --- Displays a popup.
 --- @param id integer the identifier of the popup
@@ -568,7 +437,7 @@ function tfm.exec.snow(duration,snowballPower) end
 --- @param y? integer the vertical coordinate of the top-left corner (default 50)
 --- @param width? integer the width in pixels of the popup (if 0, it will be ajusted to the text width) (default 0)
 --- @param fixedPos? boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
-function ui.addPopup(id,type,text,targetPlayer,x,y,width,fixedPos) end
+function ui.addPopup(id, type, text, targetPlayer, x, y, width, fixedPos) end
 
 --- Displays a text area.
 --- @param id integer the identifier of the text area
@@ -582,15 +451,15 @@ function ui.addPopup(id,type,text,targetPlayer,x,y,width,fixedPos) end
 --- @param borderColor? integer the border color of the text area (default 0)
 --- @param backgroundAlpha? number the background's opacity, from 0 (transparent) to 1 (opaque) (default 1)
 --- @param fixedPos? boolean whether the position is fixed or if it should follow the player's camera on long maps (default false)
-function ui.addTextArea(id,text,targetPlayer,x,y,width,height,backgroundColor,borderColor,backgroundAlpha,fixedPos) end
+function ui.addTextArea(id, text, targetPlayer, x, y, width, height, backgroundColor, borderColor, backgroundAlpha, fixedPos) end
 
 --- Removes a text area.
 --- @param id integer the identifier of the text area
 --- @param targetPlayer? string the player whom the text area will disappear (if nil, applies to all players) (default nil)
-function ui.removeTextArea(id,targetPlayer) end
+function ui.removeTextArea(id, targetPlayer) end
 
---- Sets the map background color.
---- @param color? string the background color, in hex code format (default "#6A7495")
+--- Set the background color. Last one game.
+--- @param color? string Background color. (default "#6A7495")
 function ui.setBackgroundColor(color) end
 
 --- Sets the map name.
@@ -606,82 +475,10 @@ function ui.setShamanName(text) end
 --- @param targetPlayer? string the player who will see the color picker (if nil, applies to all players) (default nil)
 --- @param defaultColor? integer the default color on the color picker (default 0)
 --- @param title? string the title of the color picker (default nil)
-function ui.showColorPicker(id,targetPlayer,defaultColor,title) end
+function ui.showColorPicker(id, targetPlayer, defaultColor, title) end
 
 --- Updates the content of a text area.
 --- @param id integer the identifier of the text area
 --- @param text string the new text to display
 --- @param targetPlayer? string the player who will get displayed the new text (if nil, applies to all players) (default nil)
-function ui.updateTextArea(id,text,targetPlayer) end
-
---- Sets the map name.
---- @param text string the text to display as the map name
---- @deprecated
---- @see ui.setMapName
-function tfm.exec.setUIMapName(text) end
-
---- Sets the shaman name. This function is **deprecated**, see `ui.setShamanName`.
---- @param text string the text to display as the shaman name
---- @deprecated
---- @see ui.setShamanName
-function tfm.exec.setUIShamanName(text) end
-
---- Listens to the player's keyboard events. This function is **deprecated**, see `system.bindKeyboard`.
---- @param playerName string the player you want to listen keyboard events from
---- @param keyCode integer the code of the key you want to listen
----     - to accurately listen for player movement (both arrows and wasd/zqsd keys), you can use 0 (left), 1 (up), 2 (right) or 3 (down)
----     - regular AS3 keycodes can be found on http://help.adobe.com/fr_FR/FlashPlatform/reference/actionscript/3/flash/ui/Keyboard.html
---- @param down boolean whether it should listen for the press event, or the release one
---- @param activate boolean whether it should be active (default true)
---- @deprecated
---- @see system.bindKeyboard
-function tfm.exec.bindKeyboard(playerName,keyCode,down,activate) end
-
---- @class osdatetfm
---- four digits
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.year"])
---- @field year integer
---- 1-12
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.month"])
---- @field month integer
---- 1-31
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.day"])
---- @field day integer
---- 0-23
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.hour"])
---- @field hour integer
---- 0-59
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.min"])
---- @field min integer
---- 0-61
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.sec"])
---- @field sec integer
---- weekday, 1–7, Sunday is 1
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.wday"])
---- @field wday integer
---- day of the year, 1–366
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.yday"])
---- @field yday integer
---- daylight saving flag, a boolean
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.isdst"])
---- @field isdst boolean
-
---- Returns a string or a table containing date and time, formatted according to the given string `format`.
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-os.date"])
---- @param format? string
---- @param time? integer time in milliseconds
---- @return string|osdatetfm
-function os.date(format, time) end
-
---- Returns the difference, in milliseconds, from time `t1` to time `t2`.
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-os.difftime"])
---- @param t2 integer time in milliseconds
---- @param t1 integer time in milliseconds
---- @return integer @time in milliseconds
-function os.difftime(t2, t1) end
-
---- Returns the current time when called without arguments, or a time representing the local date and time specified by the given table.
---- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-os.time"])
---- @param date? osdatetfm
---- @return integer @time in milliseconds
-function os.time(date) end
+function ui.updateTextArea(id, text, targetPlayer) end
