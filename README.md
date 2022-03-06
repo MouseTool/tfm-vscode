@@ -46,3 +46,6 @@ If you are using `.luarc.json`, this would be:
 ```
 
 Finally, you should be asked to load the Transformice environment after writing your code.
+
+![image](https://user-images.githubusercontent.com/79615454/156942548-6d56c05e-058b-4f98-94ec-9d766728fe0f.png)
+
