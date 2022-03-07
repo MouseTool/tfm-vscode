@@ -146,8 +146,6 @@ const modifiers: IOverrideModify[] = [
   {
     name: "tfm.exec.addImage",
     modify: (lfnc) => {
-      // TODO: replace number with float?
-
       // Add clarity to param descs
       const replaceDesc = [
         [

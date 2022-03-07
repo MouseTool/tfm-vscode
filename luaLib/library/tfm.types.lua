@@ -1,6 +1,5 @@
 --- @meta
 
---- @class float:number @Floating-point precision decimal number
 --- @class XYString:string @String coordinates in the `x,y` format
 
 --- @class debuglibtfm
@@ -46,7 +45,7 @@ tfm.enum = {}
 
 --- @class TfmMisc
 --- @field apiVersion string
---- @field transformiceVersion float
+--- @field transformiceVersion number
 
 --- @class TfmShamanObject
 --- @field angle integer
@@ -125,18 +124,18 @@ tfm.enum = {}
 --- @field point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
 --- @field point3 XYString @location of the pulley's first anchor, only used with pulley joints
 --- @field point4 XYString @location of the pulley's second anchor, only used with pulley joints
---- @field frequency float @distance joints' frequency
---- @field damping float @distance joints' damping ratio
+--- @field frequency number @distance joints' frequency
+--- @field damping number @distance joints' damping ratio
 --- @field axis XYString @prismatic joints' axis
 --- @field angle XYString @prismatic joints' angle
---- @field limit1 float @prismatic and revolute joints' translation/rotation first limit
---- @field limit2 float @prismatic and revolute joints' translation/rotation second limit
---- @field forceMotor float @prismatic and revolute joints' motor power
---- @field speedMotor float @prismatic and revolute joints' motor speed
---- @field ratio float @revolute joints' ratio
+--- @field limit1 number @prismatic and revolute joints' translation/rotation first limit
+--- @field limit2 number @prismatic and revolute joints' translation/rotation second limit
+--- @field forceMotor number @prismatic and revolute joints' motor power
+--- @field speedMotor number @prismatic and revolute joints' motor speed
+--- @field ratio number @revolute joints' ratio
 --- @field line integer @draw line's thickness
 --- @field color integer float @draw line's color
---- @field alpha float @draw line's opacity
+--- @field alpha number @draw line's opacity
 --- @field foreground boolean @whether the draw line is foreground
 
 --- @class BodyDef
@@ -144,8 +143,8 @@ tfm.enum = {}
 --- @field width integer
 --- @field height integer
 --- @field foreground boolean
---- @field friction float
---- @field restitution float
+--- @field friction number
+--- @field restitution number
 --- @field angle integer
 --- @field color integer
 --- @field miceCollision boolean
@@ -153,12 +152,12 @@ tfm.enum = {}
 --- @field dynamic boolean
 --- @field fixedRotation boolean
 --- @field mass integer
---- @field linearDamping float
---- @field angularDamping float
+--- @field linearDamping number
+--- @field angularDamping number
 
 --- @class ShamanObjOpt
---- @field fixedXSpeed float
---- @field fixedYSpeed float
+--- @field fixedXSpeed number
+--- @field fixedYSpeed number
 
 --- @class TfmGet @Transformice metadata
 --- @field misc TfmMisc
