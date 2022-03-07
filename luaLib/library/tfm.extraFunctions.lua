@@ -1,3 +1,5 @@
+--- @meta
+
 --- Returns a string with a traceback of the call stack. The optional message string is appended at the beginning of the traceback.
 ---
 --- [View documents](command:extension.lua.doc?["en-US/52/manual.html/pdf-debug.traceback"])
