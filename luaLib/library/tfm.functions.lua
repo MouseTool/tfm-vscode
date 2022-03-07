@@ -135,7 +135,7 @@ function tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, 
 --- @param id integer the identifier of the joint
 --- @param ground1 integer the first ground the joint will affect
 --- @param ground2 integer the second ground the joint will affect
---- @param jointDef JointDef the joint description (table)
+--- @param jointDef tfm.JointDef the joint description (table)
 ---     - type (Int): 0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
 ---     - point1 (String "x,y"): location of the ground1 anchor (default: the ground1's center)
 ---     - point2 (String "x,y"): location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
@@ -151,7 +151,7 @@ function tfm.exec.addJoint(id, ground1, ground2, jointDef) end
 --- @param id integer the identifier of the physic object
 --- @param xPosition integer the horizontal coordinate of the center of the ground
 --- @param yPosition integer the vertical coordinate of the center of the ground
---- @param bodyDef BodyDef the ground description (table)
+--- @param bodyDef tfm.BodyDef the ground description (table)
 ---     - type (Int), width (Int), height (Int), foreground (Boolean), friction (Float), restitution (Float), angle (Int), color (Int), miceCollision (Boolean), groundCollision (Boolean)
 ---     - dynamic (Boolean), fixedRotation (Boolean), mass (Int), linearDamping (Float), angularDamping (Float) for dynamic grounds, contactListener (Boolean)
 function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
@@ -164,7 +164,7 @@ function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default `0`)
 --- @param ySpeed? integer the vertical speed of the object (default `0`)
 --- @param ghost? boolean whether the spawned object should be transparent (default `false`)
---- @param options? ShamanObjOpt the shaman object description (table)(default `nil`)
+--- @param options? tfm.ShamanObjOpt the shaman object description (table)(default `nil`)
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost, options) end
 

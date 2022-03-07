@@ -1,14 +1,14 @@
 --- @meta
 
---- @class XYString:string @String coordinates in the `x,y` format
+--- @class tfm.XYString:string @String coordinates in the `x,y` format
 
---- @class debuglibtfm
+--- @class tfm.debuglib
 debug = {}
 
---- @class oslibtfm
+--- @class tfm.oslib
 os = {}
 
---- @class osdatetfm
+--- @class tfm.osdate
 --- four digits
 --- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.year"])
 --- @field year integer
@@ -43,11 +43,11 @@ tfm = {}
 --- Transformice enumerations table
 tfm.enum = {}
 
---- @class TfmMisc
+--- @class tfm.Misc
 --- @field apiVersion string
 --- @field transformiceVersion number
 
---- @class TfmShamanObject
+--- @class tfm.ShamanObject
 --- @field angle integer
 --- @field baseType integer
 --- @field colors string[]
@@ -59,7 +59,7 @@ tfm.enum = {}
 --- @field x integer @The horizontal coordinate of the object.
 --- @field y integer @The vertical coordinate of the object.
 
---- @class TfmPlayer
+--- @class tfm.Player
 --- @field cheeses integer @The number of cheeses that the player is carrying. This property is useful in multiple-cheese maps (dodue).
 --- @field community string @The legacy community of the player. This exists for backward compatibility, consider using `language` instead.
 --- @field gender integer
@@ -90,13 +90,13 @@ tfm.enum = {}
 --- @field x integer @The horizontal coordinate of the player.
 --- @field y integer @The vertical coordinate of the player.
 
---- @class XmlMapInfo
+--- @class tfm.XmlMapInfo
 --- @field author string
 --- @field mapCode integer
 --- @field permCode integer
 --- @field xml string
 
---- @class TfmRoom
+--- @class tfm.Room
 --- @field community string @The legacy community of the room. This exists for backward compatibility, consider using `language` instead.
 --- @field currentMap string
 --- @field isTribeHouse boolean
@@ -104,13 +104,13 @@ tfm.enum = {}
 --- @field maxPlayers integer
 --- @field mirroredMap boolean
 --- @field name string
---- @field objectList table<integer, TfmShamanObject> @<objectId, objectMeta>
+--- @field objectList table<integer, tfm.ShamanObject> @<objectId, objectMeta>
 --- @field passwordProtected boolean
---- @field playerList table<string, TfmPlayer> @<playerName, playerMeta>
+--- @field playerList table<string, tfm.Player> @<playerName, playerMeta>
 --- @field uniquePlayers integer|nil @The number of unique IP addresses in the room. Module team only.
---- @field xmlMapInfo XmlMapInfo|nil
+--- @field xmlMapInfo tfm.XmlMapInfo|nil
 
---- @alias JointType
+--- @alias tfm.JointType
 ---| '0' # distance joint
 ---| '1' # prismatic joint
 ---| '2' # pulley joint
@@ -118,16 +118,16 @@ tfm.enum = {}
 
 -- NOTE: to remove joint custom type description when/if lua-vscode
 -- supports expanding alias description of fields
---- @class JointDef
---- @field type JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
---- @field point1 XYString @location of the ground1 anchor (default: the ground1's center)
---- @field point2 XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
---- @field point3 XYString @location of the pulley's first anchor, only used with pulley joints
---- @field point4 XYString @location of the pulley's second anchor, only used with pulley joints
+--- @class tfm.JointDef
+--- @field type tfm.JointType @0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
+--- @field point1 tfm.XYString @location of the ground1 anchor (default: the ground1's center)
+--- @field point2 tfm.XYString @location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
+--- @field point3 tfm.XYString @location of the pulley's first anchor, only used with pulley joints
+--- @field point4 tfm.XYString @location of the pulley's second anchor, only used with pulley joints
 --- @field frequency number @distance joints' frequency
 --- @field damping number @distance joints' damping ratio
---- @field axis XYString @prismatic joints' axis
---- @field angle XYString @prismatic joints' angle
+--- @field axis tfm.XYString @prismatic joints' axis
+--- @field angle tfm.XYString @prismatic joints' angle
 --- @field limit1 number @prismatic and revolute joints' translation/rotation first limit
 --- @field limit2 number @prismatic and revolute joints' translation/rotation second limit
 --- @field forceMotor number @prismatic and revolute joints' motor power
@@ -138,7 +138,7 @@ tfm.enum = {}
 --- @field alpha number @draw line's opacity
 --- @field foreground boolean @whether the draw line is foreground
 
---- @class BodyDef
+--- @class tfm.BodyDef
 --- @field type integer
 --- @field width integer
 --- @field height integer
@@ -155,13 +155,13 @@ tfm.enum = {}
 --- @field linearDamping number
 --- @field angularDamping number
 
---- @class ShamanObjOpt
+--- @class tfm.ShamanObjOpt
 --- @field fixedXSpeed number
 --- @field fixedYSpeed number
 
---- @class TfmGet @Transformice metadata
---- @field misc TfmMisc
---- @field room TfmRoom
+--- @class tfm.Get @Transformice metadata
+--- @field misc tfm.Misc
+--- @field room tfm.Room
 tfm.get = {}
 
 --- Transformice system namespace
@@ -170,6 +170,6 @@ system = {}
 -- Transformice user interface namespace
 ui = {}
 
---- @class TfmExec
+--- @class tfm.Exec
 --- Transformice exec namespace
 tfm.exec = {}

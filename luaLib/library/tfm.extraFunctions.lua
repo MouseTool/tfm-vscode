@@ -35,7 +35,7 @@ function tfm.exec.bindKeyboard(playerName, keyCode, down, activate) end
 --- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-os.date"])
 --- @param format? string
 --- @param time? integer time in milliseconds
---- @return string|osdatetfm
+--- @return string|tfm.osdate
 function os.date(format, time) end
 
 --- Returns the difference, in milliseconds, from time `t1` to time `t2`.
@@ -47,6 +47,6 @@ function os.difftime(t2, t1) end
 
 --- Returns the current time when called without arguments, or a time representing the local date and time specified by the given table.
 --- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-os.time"])
---- @param date? osdatetfm
+--- @param date? tfm.osdate
 --- @return integer @time in milliseconds
 function os.time(date) end

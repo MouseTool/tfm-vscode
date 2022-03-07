@@ -187,7 +187,7 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Point jointDef to custom type
       const pJoint = lfnc.params.get("jointDef");
-      pJoint.type = "JointDef";
+      pJoint.type = "tfm.JointDef";
       pJoint.description = "the joint description (table)";
     },
   },
@@ -197,7 +197,7 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Point bodyDef to custom type
       const pJoint = lfnc.params.get("bodyDef");
-      pJoint.type = "BodyDef";
+      pJoint.type = "tfm.BodyDef";
       pJoint.description = "the ground description (table)";
     },
   },
@@ -207,7 +207,7 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Point options to custom type and make optional
       const pOptions = lfnc.params.get("options");
-      pOptions.type = "ShamanObjOpt";
+      pOptions.type = "tfm.ShamanObjOpt";
       pOptions.description = "the shaman object description (table)";
       pOptions.defaultValue = "nil";
     },
