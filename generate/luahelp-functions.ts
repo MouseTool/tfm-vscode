@@ -1,3 +1,4 @@
+import { overrides } from "./luahelp-functions.overrides";
 import { LuaHelpDocument } from "./LuaHelpDocument";
 
 const MAP_TO_EMMYLUA: Record<string, string> = {
@@ -10,7 +11,7 @@ const MAP_TO_EMMYLUA: Record<string, string> = {
   Object: "any",
 };
 
-class FunctionParam {
+export class FunctionParam {
   public description: string;
   public additionalDescription: string[];
   public defaultValue?: string;
@@ -18,11 +19,16 @@ class FunctionParam {
 
   constructor(
     public name: string,
-    luaHelpType: string,
-    description: string = ""
+    type: string,
+    description: string = "",
+    isTypeFromLuaHelp = true
   ) {
-    this.type = MAP_TO_EMMYLUA[luaHelpType];
-    if (!this.type) throw "no known type " + luaHelpType;
+    if (isTypeFromLuaHelp) {
+      this.type = MAP_TO_EMMYLUA[type];
+      if (!this.type) throw "no known type " + type;
+    } else {
+      this.type = type;
+    }
     this.additionalDescription = [];
 
     // Strip away the default value
@@ -45,39 +51,33 @@ class FunctionParam {
   }
 }
 
-class LuaHelpFunction {
-  private _description: string;
-  private _params: FunctionParam[];
-  private _returnType?: FunctionParam;
+export class LuaHelpFunction {
+  public description: string;
+  public additionalDescription: string[];
+  public params: Map<string, FunctionParam>;
+  public returnType?: FunctionParam;
 
   constructor(public name: string) {
-    this._description = "";
-    this._params = [];
-    this._returnType = null;
-  }
-
-  public get description() {
-    return this._description;
-  }
-
-  public get params() {
-    return this._params;
-  }
-
-  public get returnType() {
-    return this._returnType;
+    this.description = "";
+    this.additionalDescription = [];
+    this.params = new Map<string, FunctionParam>();
+    this.returnType = null;
   }
 
   addParam(param: FunctionParam) {
-    this._params.push(param);
+    this.params.set(param.name, param);
   }
 
   setDescription(description: string) {
-    this._description = description;
+    this.description = description;
+  }
+
+  addDescription(desc: string) {
+    this.additionalDescription.push(desc);
   }
 
   setReturnType(type: FunctionParam) {
-    this._returnType = type;
+    this.returnType = type;
   }
 }
 
@@ -87,6 +87,10 @@ const FUNC_RETURNS_REGEX = /^Returns \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
 
 export class LuaHelpFunctionDocument extends LuaHelpDocument {
   private funcs: LuaHelpFunction[];
+
+  constructor(buf: string | string[], private disableOverrides = false) {
+    super(buf);
+  }
 
   parse() {
     const funcs: LuaHelpFunction[] = [];
@@ -100,15 +104,30 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
       currentParam = null;
     };
 
+    const endFunc = () => {
+      if (currentFunc) {
+        // Override if needed
+        if (!this.disableOverrides) {
+          const o = overrides[currentFunc.name];
+          if (o) {
+            if (o.type == "add") {
+              throw `Your override "${o.name}" is an existing LuaHelp function. Please remove it!`;
+            }
+            o.modify(currentFunc);
+          }
+        }
+        funcs.push(currentFunc);
+      }
+      currentFunc = null;
+    };
+
     for (const line of this.lines) {
       if (line.length == 0) continue;
       let m = FUNC_START_REGEX.exec(line);
       if (m !== null) {
         // save curr
         endParam();
-        if (currentFunc) {
-          funcs.push(currentFunc);
-        }
+        endFunc();
         currentFunc = new LuaHelpFunction(m[1]);
       } else if (currentFunc !== null) {
         if (line.startsWith(" ".repeat(4))) {
@@ -128,9 +147,7 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
     }
 
     endParam();
-    if (currentFunc) {
-      funcs.push(currentFunc);
-    }
+    endFunc();
     console.debug(JSON.stringify(funcs, null, 2));
 
     this.funcs = funcs;
@@ -142,8 +159,11 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
     for (const func of this.funcs) {
       const parNames = [];
       newLines.push(`--- ${func.description}`);
+      for (const desc of func.additionalDescription) {
+        newLines.push(`--- ${desc}`);
+      }
 
-      for (const par of func.params) {
+      for (const par of func.params.values()) {
         newLines.push(
           `--- @param ${par.name}${par.isOptional ? "?" : ""} ${par.type} ${
             par.description

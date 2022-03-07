@@ -9,6 +9,35 @@ debug = {}
 --- @class oslibtfm
 os = {}
 
+--- @class osdatetfm
+--- four digits
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.year"])
+--- @field year integer
+--- 1-12
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.month"])
+--- @field month integer
+--- 1-31
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.day"])
+--- @field day integer
+--- 0-23
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.hour"])
+--- @field hour integer
+--- 0-59
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.min"])
+--- @field min integer
+--- 0-61
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.sec"])
+--- @field sec integer
+--- weekday, 1–7, Sunday is 1
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.wday"])
+--- @field wday integer
+--- day of the year, 1–366
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.yday"])
+--- @field yday integer
+--- daylight saving flag, a boolean
+--- [View documents](command:extension.lua.doc?["en-us/52/manual.html/pdf-osdate.isdst"])
+--- @field isdst boolean
+
 --- Global Transformice namespace
 tfm = {}
 
