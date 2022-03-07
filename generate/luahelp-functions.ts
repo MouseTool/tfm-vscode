@@ -11,23 +11,33 @@ const MAP_TO_EMMYLUA: Record<string, string> = {
 };
 
 class FunctionParam {
+  public description: string;
   public additionalDescription: string[];
+  public defaultValue?: string;
   public type: string;
+
   constructor(
     public name: string,
     luaHelpType: string,
-    public description: string = ""
+    description: string = ""
   ) {
     this.type = MAP_TO_EMMYLUA[luaHelpType];
     if (!this.type) throw "no known type " + luaHelpType;
     this.additionalDescription = [];
+
+    // Strip away the default value
+    const m = description.match(/(.*)\(default (.*)\)\s?$/m);
+    if (m != null) {
+      const [_, strippedDesc, defaultVal] = m;
+      this.description = strippedDesc;
+      this.defaultValue = defaultVal;
+    } else {
+      this.description = description;
+    }
   }
 
-  isOptional() {
-    return (
-      this.description != null &&
-      this.description.match(/.*\(default(.*)\)\s?$/m)
-    );
+  get isOptional() {
+    return this.defaultValue != null;
   }
 
   addDescription(desc: string) {
@@ -83,7 +93,7 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
     let currentFunc: LuaHelpFunction | null = null;
     let currentParam: FunctionParam | null = null;
 
-    let endParam = () => {
+    const endParam = () => {
       if (currentParam) {
         currentFunc.addParam(currentParam);
       }
@@ -135,9 +145,9 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
 
       for (const par of func.params) {
         newLines.push(
-          `--- @param ${par.name}${par.isOptional() ? "?" : ""} ${par.type} ${
+          `--- @param ${par.name}${par.isOptional ? "?" : ""} ${par.type} ${
             par.description
-          }`
+          }${par.defaultValue ? `(default \`${par.defaultValue}\`)` : ""}`
         );
         for (const desc of par.additionalDescription) {
           newLines.push(`--- ${desc}`);
@@ -145,7 +155,9 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
         parNames.push(par.name);
       }
       if (func.returnType) {
-        newLines.push(`--- @return ${func.returnType.type} @${func.returnType.description}`);
+        newLines.push(
+          `--- @return ${func.returnType.type} @${func.returnType.description}`
+        );
       }
       newLines.push(`function ${func.name}(${parNames.join(", ")}) end`);
       newLines.push("");

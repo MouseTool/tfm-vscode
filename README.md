@@ -1,6 +1,6 @@
 # tfm-vscode
 
-Lua Language Server (VSCode) environment definition for Transformice.
+[Lua Language Server](https://github.com/sumneko/lua-language-server) environment definition for Transformice.
 
 ## Usage
 
