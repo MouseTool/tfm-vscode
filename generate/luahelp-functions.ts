@@ -19,11 +19,16 @@ export class FunctionParam {
 
   constructor(
     public name: string,
-    luaHelpType: string,
-    description: string = ""
+    type: string,
+    description: string = "",
+    isTypeFromLuaHelp = true
   ) {
-    this.type = MAP_TO_EMMYLUA[luaHelpType];
-    if (!this.type) throw "no known type " + luaHelpType;
+    if (isTypeFromLuaHelp) {
+      this.type = MAP_TO_EMMYLUA[type];
+      if (!this.type) throw "no known type " + type;
+    } else {
+      this.type = type;
+    }
     this.additionalDescription = [];
 
     // Strip away the default value
@@ -48,21 +53,27 @@ export class FunctionParam {
 
 export class LuaHelpFunction {
   public description: string;
-  public params: FunctionParam[];
+  public additionalDescription: string[];
+  public params: Map<string, FunctionParam>;
   public returnType?: FunctionParam;
 
   constructor(public name: string) {
     this.description = "";
-    this.params = [];
+    this.additionalDescription = [];
+    this.params = new Map<string, FunctionParam>();
     this.returnType = null;
   }
 
   addParam(param: FunctionParam) {
-    this.params.push(param);
+    this.params.set(param.name, param);
   }
 
   setDescription(description: string) {
     this.description = description;
+  }
+
+  addDescription(desc: string) {
+    this.additionalDescription.push(desc);
   }
 
   setReturnType(type: FunctionParam) {
@@ -148,8 +159,11 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
     for (const func of this.funcs) {
       const parNames = [];
       newLines.push(`--- ${func.description}`);
+      for (const desc of func.additionalDescription) {
+        newLines.push(`--- ${desc}`);
+      }
 
-      for (const par of func.params) {
+      for (const par of func.params.values()) {
         newLines.push(
           `--- @param ${par.name}${par.isOptional ? "?" : ""} ${par.type} ${
             par.description
