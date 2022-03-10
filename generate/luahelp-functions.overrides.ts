@@ -26,18 +26,6 @@ const modifiers: IOverrideModify[] = [
   {
     name: "system.disableChatCommandDisplay",
     modify: (lfnc) => {
-      // Just a minor typo
-      const { description } = lfnc.params.get("hide");
-      lfnc.params.get("hide").description = description.replace(
-        "hided",
-        "hidden"
-      );
-    },
-  },
-
-  {
-    name: "system.disableChatCommandDisplay",
-    modify: (lfnc) => {
       // Just a minor typo in `hide` param
       const pHide = lfnc.params.get("hide");
       pHide.description = pHide.description.replace("hided", "hidden");
@@ -188,7 +176,20 @@ const modifiers: IOverrideModify[] = [
       // Point jointDef to custom type
       const pJoint = lfnc.params.get("jointDef");
       pJoint.type = "tfm.JointDef";
-      pJoint.description = "the joint description (table)";
+      pJoint.description = "the joint configuration";
+    },
+  },
+
+  {
+    name: "tfm.exec.addNPC",
+    modify: (lfnc) => {
+      // Tig forgot to add the description
+      lfnc.setDescription("Spawns an NPC.")
+
+      // Point npcDef to custom type
+      const pNpc = lfnc.params.get("npcDef");
+      pNpc.type = "tfm.NPCDef";
+      pNpc.description = "the NPC configuration";
     },
   },
 
@@ -196,9 +197,9 @@ const modifiers: IOverrideModify[] = [
     name: "tfm.exec.addPhysicObject",
     modify: (lfnc) => {
       // Point bodyDef to custom type
-      const pJoint = lfnc.params.get("bodyDef");
-      pJoint.type = "tfm.BodyDef";
-      pJoint.description = "the ground description (table)";
+      const pBody = lfnc.params.get("bodyDef");
+      pBody.type = "tfm.BodyDef";
+      pBody.description = "the ground configuration";
     },
   },
 
@@ -208,7 +209,7 @@ const modifiers: IOverrideModify[] = [
       // Point options to custom type and make optional
       const pOptions = lfnc.params.get("options");
       pOptions.type = "tfm.ShamanObjOpt";
-      pOptions.description = "the shaman object description (table)";
+      pOptions.description = "the shaman object configuration";
       pOptions.defaultValue = "nil";
     },
   },

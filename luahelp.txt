@@ -256,6 +256,7 @@ tfm
     addConjuration
     addImage
     addJoint
+    addNPC
     addPhysicObject
     addShamanObject
     attachBalloon
@@ -317,7 +318,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.89
+      transformiceVersion : 7.9
     room
       community : -
       currentMap : 0
@@ -360,7 +361,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1646490156906
+          registrationDate : 1646929194823
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -531,6 +532,11 @@ This event is triggered when a player hit a ground with a contact listener.
   groundId (Int) ground identifier
   contactInfos (Table) Collision informations
 
+eventTalkToNPC(playerName, npcName)
+This event is triggered when a player hit a ground with a contact listener.
+  playerName (String) The player who talk to the NPC
+  npcName (String) The NPC name
+
 Functions
 
 debug.disableEventLog(activate)
@@ -669,6 +675,19 @@ Adds a joint between two physic objects. . Note: In map XML codes, you can also 
     - limit1 (Float), limit2 (Float), forceMotor (Float), speedMotor (Float): prismatic and revolute joints' translation/rotation limits and motors
     - ratio (Float): revolute joints' ratio
     - line (Int), color (Int), alpha (Float), foreground (Boolean): if none of these properties is defined, the joint won't be drawn
+
+tfm.exec.addNPC(name, npcDef)
+Set the night mode for a player.
+  name (String) NPC name.
+  npcDef (Table) The NPC definition
+    - title (Int): NPC title.
+    - look (String): NPC look.
+    - x (int): X position.
+    - y (int): Y position.
+    - female (bool): Set True if the NPC is female.
+    - lookLeft (bool): Set True to make the NPC look to the left.
+    - lookAtPlayer (bool): Set True to make the NPC look to the player.
+    - interactive (Boolean): If true, player will be able to click on it.
 
 tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef)
 Spawns a ground.

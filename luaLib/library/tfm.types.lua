@@ -159,6 +159,16 @@ tfm.enum = {}
 --- @field fixedXSpeed number
 --- @field fixedYSpeed number
 
+--- @class tfm.NPCDef
+--- @field title integer
+--- @field look string
+--- @field x integer @The horizontal coordinate of the NPC.
+--- @field y integer @The vertical coordinate of the NPC.
+--- @field female boolean @Whether the title shown is in female gender context.
+--- @field lookLeft boolean
+--- @field lookAtPlayer boolean
+--- @field interactive boolean @Whether clicking on the NPC is enabled and will trigger `eventTalkToNPC`.
+
 --- @class tfm.Get @Transformice metadata
 --- @field misc tfm.Misc
 --- @field room tfm.Room

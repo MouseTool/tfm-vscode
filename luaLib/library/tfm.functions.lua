@@ -135,7 +135,7 @@ function tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, 
 --- @param id integer the identifier of the joint
 --- @param ground1 integer the first ground the joint will affect
 --- @param ground2 integer the second ground the joint will affect
---- @param jointDef tfm.JointDef the joint description (table)
+--- @param jointDef tfm.JointDef the joint configuration
 ---     - type (Int): 0 -> distance joint, 1 -> prismatic joint, 2 -> pulley joint, 3 -> revolute joint
 ---     - point1 (String "x,y"): location of the ground1 anchor (default: the ground1's center)
 ---     - point2 (String "x,y"): location of the ground2 anchor (default: the ground2's center), only used with distance and pulley joints
@@ -147,11 +147,24 @@ function tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, 
 ---     - line (Int), color (Int), alpha (Float), foreground (Boolean): if none of these properties is defined, the joint won't be drawn
 function tfm.exec.addJoint(id, ground1, ground2, jointDef) end
 
+--- Spawns an NPC.
+--- @param name string NPC name.
+--- @param npcDef tfm.NPCDef the NPC configuration
+---     - title (Int): NPC title.
+---     - look (String): NPC look.
+---     - x (int): X position.
+---     - y (int): Y position.
+---     - female (bool): Set True if the NPC is female.
+---     - lookLeft (bool): Set True to make the NPC look to the left.
+---     - lookAtPlayer (bool): Set True to make the NPC look to the player.
+---     - interactive (Boolean): If true, player will be able to click on it.
+function tfm.exec.addNPC(name, npcDef) end
+
 --- Spawns a ground.
 --- @param id integer the identifier of the physic object
 --- @param xPosition integer the horizontal coordinate of the center of the ground
 --- @param yPosition integer the vertical coordinate of the center of the ground
---- @param bodyDef tfm.BodyDef the ground description (table)
+--- @param bodyDef tfm.BodyDef the ground configuration
 ---     - type (Int), width (Int), height (Int), foreground (Boolean), friction (Float), restitution (Float), angle (Int), color (Int), miceCollision (Boolean), groundCollision (Boolean)
 ---     - dynamic (Boolean), fixedRotation (Boolean), mass (Int), linearDamping (Float), angularDamping (Float) for dynamic grounds, contactListener (Boolean)
 function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
@@ -164,7 +177,7 @@ function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default `0`)
 --- @param ySpeed? integer the vertical speed of the object (default `0`)
 --- @param ghost? boolean whether the spawned object should be transparent (default `false`)
---- @param options? tfm.ShamanObjOpt the shaman object description (table)(default `nil`)
+--- @param options? tfm.ShamanObjOpt the shaman object configuration(default `nil`)
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost, options) end
 
