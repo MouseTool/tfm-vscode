@@ -22,7 +22,7 @@ async function write(mode: LuaHelpDocumentModes, lines: string[]) {
   const outputs = generate((await fsp.readFile("./luahelp.txt")).toString());
   console.log("Generated.");
   for (const mode of Object.keys(outputs)) {
-    write(mode as LuaHelpDocumentModes, outputs[mode]);
+    await write(mode as LuaHelpDocumentModes, outputs[mode]);
   }
   console.log("Wrote output to file.");
 })();
