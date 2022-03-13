@@ -1,7 +1,7 @@
 {
   "name": "@mousetool/tfm-vscode",
-  "version": "2.0.1",
-  "description": "",
+  "version": "2.0.2",
+  "description": "Lua Language Server environment definition for Transformice.",
   "main": "dummy.js",
   "scripts": {
     "generate": "ts-node generate/main.ts"
