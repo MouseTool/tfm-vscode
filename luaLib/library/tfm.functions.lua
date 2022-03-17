@@ -67,6 +67,12 @@ function system.luaEventLaunchInterval(interval, random) end
 --- @return integer @the new timer id
 function system.newTimer(callback, time, loop, arg1, arg2, arg3, arg4) end
 
+--- Open the shop of the specified event.
+--- Event elevation only.
+--- @param eventName string Event name.
+--- @param playerName string Target player name.
+function system.openEventShop(eventName, playerName) end
+
 --- Destroys a timer.
 --- Module team only.
 --- @param timerId integer the identifier of the timer to stop
@@ -158,7 +164,8 @@ function tfm.exec.addJoint(id, ground1, ground2, jointDef) end
 ---     - lookLeft (bool): Set True to make the NPC look to the left.
 ---     - lookAtPlayer (bool): Set True to make the NPC look to the player.
 ---     - interactive (Boolean): If true, player will be able to click on it.
-function tfm.exec.addNPC(name, npcDef) end
+--- @param targetPlayer? string the player who will see the NPC (if nil, applies to all players) (default `nil`)
+function tfm.exec.addNPC(name, npcDef, targetPlayer) end
 
 --- Spawns a ground.
 --- @param id integer the identifier of the physic object

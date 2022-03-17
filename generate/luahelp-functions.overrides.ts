@@ -82,6 +82,14 @@ const modifiers: IOverrideModify[] = [
   },
 
   {
+    name: "system.openEventShop",
+    modify: (lfnc) => {
+      // Clarify permission level
+      lfnc.addDescription("Event elevation only.");
+    },
+  },
+
+  {
     name: "system.removeTimer",
     modify: (lfnc) => {
       // Clarify permission level

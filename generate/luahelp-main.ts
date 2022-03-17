@@ -37,10 +37,10 @@ export class LuaHelpMainDocument extends LuaHelpDocument {
     this.enumDoc.parse();
   }
 
-  exportSumnekoLua(): Record<LuaHelpDocumentModes, string[]> {
+  exportSumnekoLua() {
     return {
       functions: this.funcDoc.exportSumnekoLua(),
       enums: this.enumDoc.exportSumnekoLua(),
-    };
+    } as Record<LuaHelpDocumentModes, string[]>;
   }
 }

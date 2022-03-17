@@ -101,6 +101,7 @@ system
   loadPlayerData
   luaEventLaunchInterval
   newTimer
+  openEventShop
   removeTimer
   saveFile
   savePlayerData
@@ -318,7 +319,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.9
+      transformiceVersion : 7.91
     room
       community : -
       currentMap : 0
@@ -361,7 +362,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1646929194823
+          registrationDate : 1647533783695
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -533,7 +534,7 @@ This event is triggered when a player hit a ground with a contact listener.
   contactInfos (Table) Collision informations
 
 eventTalkToNPC(playerName, npcName)
-This event is triggered when a player hit a ground with a contact listener.
+This event is triggered when a player click on a NPC.
   playerName (String) The player who talk to the NPC
   npcName (String) The NPC name
 
@@ -598,6 +599,11 @@ Creates a new timer to call a function after a delay, once or continuously.
   arg3 (Object) 3rd argument of the callback function (default nil)
   arg4 (Object) 4th argument of the callback function (default nil)
 Returns (Int) the new timer id
+
+system.openEventShop(eventName, playerName)
+Open the shop of the specified event.
+  eventName (String) Event name.
+  playerName (String) Target player name.
 
 system.removeTimer(timerId)
 Destroys a timer.
@@ -676,7 +682,7 @@ Adds a joint between two physic objects. . Note: In map XML codes, you can also 
     - ratio (Float): revolute joints' ratio
     - line (Int), color (Int), alpha (Float), foreground (Boolean): if none of these properties is defined, the joint won't be drawn
 
-tfm.exec.addNPC(name, npcDef)
+tfm.exec.addNPC(name, npcDef, targetPlayer)
 Set the night mode for a player.
   name (String) NPC name.
   npcDef (Table) The NPC definition
@@ -688,6 +694,7 @@ Set the night mode for a player.
     - lookLeft (bool): Set True to make the NPC look to the left.
     - lookAtPlayer (bool): Set True to make the NPC look to the player.
     - interactive (Boolean): If true, player will be able to click on it.
+  targetPlayer (String) the player who will see the NPC (if nil, applies to all players) (default nil)
 
 tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef)
 Spawns a ground.
