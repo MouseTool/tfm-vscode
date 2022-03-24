@@ -32,7 +32,7 @@ export class FunctionParam {
     this.additionalDescription = [];
 
     // Strip away the default value
-    const m = description.match(/(.*)\(default (.*)\)\s?$/m);
+    const m = description.match(/(.*?)\s*\(default (.*?)\)\s*$/m);
     if (m != null) {
       const [_, strippedDesc, defaultVal] = m;
       this.description = strippedDesc;
@@ -131,16 +131,14 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
         currentFunc = new LuaHelpFunction(m[1]);
       } else if (currentFunc !== null) {
         if (line.startsWith(" ".repeat(4))) {
-          //param desc cont
+          // param desc cont
           currentParam.addDescription(line);
         } else if ((m = FUNC_PARAM_REGEX.exec(line))) {
-          //param
           endParam();
           currentParam = new FunctionParam(m[1], m[2], m[3]);
         } else if ((m = FUNC_RETURNS_REGEX.exec(line))) {
           currentFunc.setReturnType(new FunctionParam("Returns", m[1], m[2]));
         } else {
-          //console.log("A",line)
           currentFunc.setDescription(line);
         }
       }
@@ -167,7 +165,7 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
         newLines.push(
           `--- @param ${par.name}${par.isOptional ? "?" : ""} ${par.type} ${
             par.description
-          }${par.defaultValue ? `(default \`${par.defaultValue}\`)` : ""}`
+          }${par.defaultValue ? ` (default \`${par.defaultValue}\`)` : ""}`
         );
         for (const desc of par.additionalDescription) {
           newLines.push(`--- ${desc}`);

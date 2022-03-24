@@ -97,12 +97,12 @@ function system.setLuaEventBanner(bannerId) end
 
 --- Adds a defilante bonus (token) to the map.
 --- @param type? integer Bonus type (see tfm.enum.bonus) (default `1`)
---- @param x? integer the horizontal coordinate of the bonus(default `0`)
---- @param y? integer the vertical coordinate of the bonus(default `0`)
---- @param id? integer the identifier of the bonus(default `0`)
---- @param angle? integer the angle of the bonus(default `0`)
---- @param visible? boolean whether the bonus should be visible(default `true`)
---- @param targetPlayer? string the player who should see the bonus (if nil, applies to all players)(default `nil`)
+--- @param x? integer the horizontal coordinate of the bonus (default `0`)
+--- @param y? integer the vertical coordinate of the bonus (default `0`)
+--- @param id? integer the identifier of the bonus (default `0`)
+--- @param angle? integer the angle of the bonus (default `0`)
+--- @param visible? boolean whether the bonus should be visible (default `true`)
+--- @param targetPlayer? string the player who should see the bonus (if nil, applies to all players) (default `nil`)
 function tfm.exec.addBonus(type, x, y, id, angle, visible, targetPlayer) end
 
 --- Adds conjuration to the map. Note: Grid coordinate are regular coordinate divided by 10 (as conjuration is a 10x10 pixel square).
@@ -126,14 +126,14 @@ function tfm.exec.addConjuration(xPosition, yPosition, duration) end
 ---     - ~fixedLayerDepthWithLuaInterfaces
 ---     - +physicObjectId
 --- @param xPosition? integer the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default `0`)
---- @param yPosition? integer the vertical offset of the anchor of the image, relative to the game element (0 being the middle of the game element)(default `0`)
+--- @param yPosition? integer the vertical offset of the anchor of the image, relative to the game element (0 being the middle of the game element) (default `0`)
 --- @param targetPlayer? string the player who will see the image (if nil, applies to all players) (default `nil`)
---- @param scaleX? number the horizontal (width) scale of the image(default `1`)
---- @param scaleY? number the vertical (height) scale of the image(default `1`)
---- @param rotation? number the opacity of the image, from 0 (transparent) to 1 (opaque)(default `0`)
---- @param alpha? number the opacity of the image, from 0 (transparent) to 1 (opaque)(default `1`)
---- @param anchorX? number the horizontal offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the left of the image)(default `0`)
---- @param anchorY? number the vertical offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the top of the image)(default `0`)
+--- @param scaleX? number the horizontal (width) scale of the image (default `1`)
+--- @param scaleY? number the vertical (height) scale of the image (default `1`)
+--- @param rotation? number the opacity of the image, from 0 (transparent) to 1 (opaque) (default `0`)
+--- @param alpha? number the opacity of the image, from 0 (transparent) to 1 (opaque) (default `1`)
+--- @param anchorX? number the horizontal offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the left of the image) (default `0`)
+--- @param anchorY? number the vertical offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the top of the image) (default `0`)
 --- @return integer @the image identifier
 function tfm.exec.addImage(imageId, target, xPosition, yPosition, targetPlayer, scaleX, scaleY, rotation, alpha, anchorX, anchorY) end
 
@@ -184,16 +184,16 @@ function tfm.exec.addPhysicObject(id, xPosition, yPosition, bodyDef) end
 --- @param xSpeed? integer the horizontal speed of the object (default `0`)
 --- @param ySpeed? integer the vertical speed of the object (default `0`)
 --- @param ghost? boolean whether the spawned object should be transparent (default `false`)
---- @param options? tfm.ShamanObjOpt the shaman object configuration(default `nil`)
+--- @param options? tfm.ShamanObjOpt the shaman object configuration (default `nil`)
 --- @return integer @the shaman object identifier
 function tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpeed, ySpeed, ghost, options) end
 
 --- Spawns and attaches a ghost balloon to a player, or detaches all balloons.
 --- @param playerName string the player's nickname
---- @param yes? boolean whether the balloon should be attached(default `true`)
---- @param color? integer the color type of the balloon (between 1 and 4)(default `1`)
---- @param transparent? boolean whether the spawned balloon should be transparent(default `false`)
---- @param speed? number the vertical speed of the balloon(default `1`)
+--- @param yes? boolean whether the balloon should be attached (default `true`)
+--- @param color? integer the color type of the balloon (between 1 and 4) (default `1`)
+--- @param transparent? boolean whether the spawned balloon should be transparent (default `false`)
+--- @param speed? number the vertical speed of the balloon (default `1`)
 --- @return integer @the shaman object identifier of the balloon
 function tfm.exec.attachBalloon(playerName, yes, color, transparent, speed) end
 
@@ -277,8 +277,8 @@ function tfm.exec.explosion(xPosition, yPosition, power, radius, miceOnly) end
 
 --- Freezes the selected player.
 --- @param playerName string the player to freeze
---- @param freeze? boolean whether the player should be frozen(default `true`)
---- @param displayIce? boolean whether the ice sprite should be shown on the player(default `true`)
+--- @param freeze? boolean whether the player should be frozen (default `true`)
+--- @param displayIce? boolean whether the ice sprite should be shown on the player (default `true`)
 function tfm.exec.freezePlayer(playerName, freeze, displayIce) end
 
 --- Gets the player who is the room's current synchronizer.
@@ -363,8 +363,8 @@ function tfm.exec.playEmote(playerName, emoteId, emoteArg) end
 function tfm.exec.playerVictory(playerName) end
 
 --- Removes a defilante bonus (token).
---- @param id? integer the identifier of the bonus(default `0`)
---- @param targetPlayer? string the player whom should have the bonus removed (if nil, applies to all players)(default `nil`)
+--- @param id? integer the identifier of the bonus (default `0`)
+--- @param targetPlayer? string the player whom should have the bonus removed (if nil, applies to all players) (default `nil`)
 function tfm.exec.removeBonus(id, targetPlayer) end
 
 --- Takes away the cheese from a player.
@@ -456,8 +456,8 @@ function tfm.exec.setShamanMode(playerName, mode) end
 function tfm.exec.setVampirePlayer(playerName, makeAVampire) end
 
 --- Changes the world acceleration along the horizontal (wind) and vertical (gravity) axes.
---- @param x? integer the horizontal acceleration of the world(default `0`)
---- @param y? integer the vertical acceleration of the world(default `10`)
+--- @param x? integer the horizontal acceleration of the world (default `0`)
+--- @param y? integer the vertical acceleration of the world (default `10`)
 function tfm.exec.setWorldGravity(x, y) end
 
 --- Makes the snow fall.

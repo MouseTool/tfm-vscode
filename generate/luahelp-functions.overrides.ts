@@ -146,7 +146,7 @@ const modifiers: IOverrideModify[] = [
       const replaceDesc = [
         [
           "xPosition",
-          "the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element) ",
+          "the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element)",
         ],
         [
           "yPosition",
@@ -191,7 +191,6 @@ const modifiers: IOverrideModify[] = [
   {
     name: "tfm.exec.addNPC",
     modify: (lfnc) => {
-      // Tig forgot to add the description
       lfnc.setDescription("Spawns an NPC.")
 
       // Point npcDef to custom type
