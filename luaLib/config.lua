@@ -35,7 +35,7 @@ end
 
 -- Add the following runtime paths
 for _, path in ipairs({
-    "?/?.lua",
+    "node_modules/?.lua",
     "node_modules/?/init.lua",
     "node_modules/?/?.lua"
 }) do
