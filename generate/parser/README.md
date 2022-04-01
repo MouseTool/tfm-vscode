@@ -6,7 +6,7 @@ Parser for LuaHelp, an API documentation for the Lua tree from [Transformice](ht
 
 ```ts
 import { promises as fsp } from "fs";
-import { parse } from "@mousetool/luahelpparser";
+import { parse } from "@cassolette/luahelpparser";
 
 const luaHelpAst = parse(
     (await fsp.readFile("./luahelp.txt")).toString()
