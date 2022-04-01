@@ -6,15 +6,17 @@ import treeParser from "./tree.parser";
 
 type LuaHelpDocumentModes = "luaTree" | "events" | "functions";
 
-export function parse(luaHelpText: string) {
-  // Strip away AS3 text area tags, if any
-  luaHelpText = striptags(luaHelpText);
+export function parse(luaHelpText: string, isAS3Text: boolean = false) {
+  if (isAS3Text) {
+    // Strip away AS3 text area tags, if given in the raw format
+    luaHelpText = striptags(luaHelpText);
+  }
 
   let currentMode: LuaHelpDocumentModes | null;
   let bufLines: Record<LuaHelpDocumentModes, string[]> = {
     luaTree: [],
     events: [],
-    functions: []
+    functions: [],
   };
   let titleToModeMap: Record<string, LuaHelpDocumentModes> = {
     "Lua tree": "luaTree",

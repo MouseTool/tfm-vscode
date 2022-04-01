@@ -11,6 +11,9 @@ export interface LuaHelpEventParameter {
 
 export interface LuaHelpEvent {
   name: string;
-  description: string;
+  /**
+   * The description of the event, each string representing a line of description.
+   */
+  description: string[];
   parameters: LuaHelpEventParameter[];
 }

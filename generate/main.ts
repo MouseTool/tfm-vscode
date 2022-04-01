@@ -1,14 +1,10 @@
 import { promises as fsp } from "fs";
-import { LuaHelpMainDocument } from "./luahelp-main";
-import { LuaHelpDocumentModes } from "./LuaHelpDocument";
+import Converter, { LuaHelpDocumentModes } from "./converter.interfaces";
+import enumsConverter from "./luahelp-enum";
+import functionsConverter from "./luahelp-functions";
+import { parse } from "./parser";
 
-function generate(luaHelpBuf: string) {
-  const doc = new LuaHelpMainDocument(luaHelpBuf);
-  doc.parse();
-  return doc.exportSumnekoLua();
-}
-
-async function write(mode: LuaHelpDocumentModes, lines: string[]) {
+async function writeLuaMeta(mode: LuaHelpDocumentModes, lines: string[]) {
   await fsp.writeFile(
     `luaLib/library/tfm.${mode}.lua`,
     "--- @meta\n" +
@@ -18,11 +14,18 @@ async function write(mode: LuaHelpDocumentModes, lines: string[]) {
 }
 
 (async () => {
-  console.log("Generating output...");
-  const outputs = generate((await fsp.readFile("./luahelp.txt")).toString());
-  console.log("Generated.");
-  for (const mode of Object.keys(outputs)) {
-    await write(mode as LuaHelpDocumentModes, outputs[mode]);
+  console.log("Parsing LuaHelp...");
+
+  const ast = parse((await fsp.readFile("./luahelp.txt")).toString());
+  // prettier-ignore
+  const converters = [
+    enumsConverter,
+    functionsConverter
+  ] as Converter[];
+
+  console.log("Generating...");
+  for (const { type, convert } of converters) {
+    await writeLuaMeta(type as LuaHelpDocumentModes, convert(ast));
   }
   console.log("Wrote output to file.");
 })();

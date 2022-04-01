@@ -26,13 +26,12 @@ class LuaHelpEventParameterExporter {
 }
 
 class LuaHelpEventExporter {
-  public description: string;
+  public description: string[];
   public additionalDescription: string[];
   public params: Map<string, LuaHelpEventParameterExporter>;
 
   constructor(public name: string) {
-    this.description = "";
-    this.additionalDescription = [];
+    this.description = [];
     this.params = new Map<string, LuaHelpEventParameterExporter>();
   }
 
@@ -40,12 +39,8 @@ class LuaHelpEventExporter {
     this.params.set(param.name, param);
   }
 
-  setDescription(description: string) {
-    this.description = description;
-  }
-
-  addDescription(desc: string) {
-    this.additionalDescription.push(desc);
+  pushDescription(description: string) {
+    this.description.push(description);
   }
 
   export() {
@@ -95,7 +90,7 @@ export default function eventsParser(lines: string[]) {
         endParam();
         currentParam = new LuaHelpEventParameterExporter(m[1], m[2], m[3]);
       } else {
-        currentEvent.setDescription(line);
+        currentEvent.pushDescription(line);
       }
     }
   }

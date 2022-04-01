@@ -1,101 +1,65 @@
-import { LuaHelpDocument } from "./LuaHelpDocument";
+import Converter from "./converter.interfaces";
+import { LuaHelpTreeNode, LuaHelpTreeTableNode } from "./parser";
 
-const TREE_DATA = /^(\s*)([a-zA-Z0-9]+)$/m;
-const ENUM_VALUE = /^(\s*)([a-zA-Z0-9]+)\s:\s(\d+)$/m;
+class LDocTableNode {
+  public children: LDocTableNode[];
+  public parent?: LDocTableNode;
 
-export class LuaHelpEnum {
-  constructor(public name: string, public value: number) {}
-}
-
-export class LuaHelpEnumContainer {
-  public containers: LuaHelpEnumContainer[];
-  public enums: LuaHelpEnum[];
-
-  constructor(public name: string, public parent?: LuaHelpEnumContainer) {
-    this.containers = [];
-    this.enums = [];
+  constructor(public name: string, public ast: LuaHelpTreeTableNode) {
+    this.children = [];
   }
 
-  addContainer(container: LuaHelpEnumContainer) {
-    this.containers.push(container);
+  static fromAst(ast: LuaHelpTreeTableNode) {
+    const tblNode = new LDocTableNode(ast.name, ast);
+    for (const c of ast.children) {
+      if (c.type !== "table") continue;
+      tblNode.addChild(LDocTableNode.fromAst(c));
+    }
+    return tblNode;
   }
 
-  addEnum(_enum: LuaHelpEnum) {
-    this.enums.push(_enum);
-  }
-}
-
-export class LuaHelpEnumDocument extends LuaHelpDocument {
-  private _enum: LuaHelpEnumContainer;
-
-  constructor(buf: string | string[]) {
-    super(buf);
+  addChild(childNode: LDocTableNode) {
+    this.children.push(childNode);
+    childNode.parent = this;
   }
 
-  parse() {
-    let _enum = new LuaHelpEnumContainer("tfm.enum");
-    let inEnum = false;
-    let identation = 2;
+  /**
+   * Navigate to a child table node.
+   */
+  navigate(name: string) {
+    return this.children.find((c) => c.name === name);
+  }
 
-    for (const line of this.lines) {
-      if (line.length === 0) continue;
-      let m = TREE_DATA.exec(line);
-      if (!inEnum) {
-        if (m !== null) {
-          inEnum = m[2] === "enum";
-        }
-        continue;
-      }
-
-      let e = ENUM_VALUE.exec(line);
-      if (!m && !e) continue;
-
-      let spaces = (m || e)[1].length / 2; // either m or e
-      while (spaces < identation) {
-        if (!_enum.parent) {
-          this._enum = _enum;
-          return;
-        }
-        _enum = _enum.parent;
-        identation--;
-      }
-
-      if (spaces > identation) {
-        throw new Error("Malformed luahelp.txt: unexpected identation");
-      }
-
-      if (m) {
-        const container = new LuaHelpEnumContainer(
-          `${_enum.name}.${m[2]}`,
-          _enum
-        );
-        _enum.addContainer(container);
-        _enum = container;
-        identation++;
-      } else {
-        _enum.addEnum(new LuaHelpEnum(e[2], parseInt(e[3])));
-      }
+  export(prefix?: string) {
+    if (prefix) {
+      prefix += "." + this.name;
+    } else {
+      prefix = this.name;
     }
 
-    while (_enum.parent) {
-      _enum = _enum.parent;
-    }
-    this._enum = _enum;
-  }
+    const newLines: string[] = [`${prefix} = {}`];
 
-  exportSumnekoLua(_enum?: LuaHelpEnumContainer) {
-    _enum = _enum || this._enum;
-    const newLines: string[] = [`${_enum.name} = {}`];
-
-    for (const container of _enum.containers) {
-      newLines.push(...this.exportSumnekoLua(container));
+    for (const c of this.children) {
+      newLines.push(...c.export(prefix));
     }
 
-    for (const entry of _enum.enums) {
-      newLines.push(`${_enum.name}.${entry.name} = ${entry.value}`);
+    for (const entry of this.ast.children) {
+      if (entry.type !== "value") continue;
+      newLines.push(`${prefix}.${entry.name} = ${entry.value}`);
     }
     newLines.push("");
 
     return newLines;
   }
 }
+
+const enumsConverter = {
+  type: "functions",
+  convert: (luaHelpAst) => {
+    const globalNode = LDocTableNode.fromAst(luaHelpAst.tree);
+    const enumNode = globalNode.navigate("tfm").navigate("enum");
+
+    return enumNode.export("tfm");
+  },
+} as Converter;
+export default enumsConverter;

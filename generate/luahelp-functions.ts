@@ -1,7 +1,13 @@
+import Converter from "./converter.interfaces";
 import { overrides } from "./luahelp-functions.overrides";
-import { LuaHelpDocument } from "./LuaHelpDocument";
+import {
+  LuaHelpFunctionParameter,
+  LuaHelpFunctionReturn,
+  LuaHelpFunction,
+} from "./parser";
 
-const MAP_TO_EMMYLUA: Record<string, string> = {
+// LDoc here = sumneko.lua LuaDoc ...
+const LUAHELP_TO_LDOC_TYPE: Record<string, string> = {
   String: "string",
   Int: "integer",
   Number: "number",
@@ -11,61 +17,46 @@ const MAP_TO_EMMYLUA: Record<string, string> = {
   Object: "any",
 };
 
-export class FunctionParam {
-  public description: string;
-  public additionalDescription: string[];
-  public defaultValue?: string;
-  public type: string;
+export class LDocFunctionParam {
+  /**
+   * The overriden name to export instead of `name`
+   */
+  public overrideName?: string;
 
   constructor(
     public name: string,
-    type: string,
-    description: string = "",
-    isTypeFromLuaHelp = true
-  ) {
-    if (isTypeFromLuaHelp) {
-      this.type = MAP_TO_EMMYLUA[type];
-      if (!this.type) throw "no known type " + type;
-    } else {
-      this.type = type;
-    }
-    this.additionalDescription = [];
+    public type: string,
+    public description: string = "",
+    public defaultValue?: string,
+    public additionalDescription: string[] = []
+  ) {}
 
-    // Strip away the default value
-    const m = description.match(/(.*?)\s*\(default (.*?)\)\s*$/m);
-    if (m != null) {
-      const [_, strippedDesc, defaultVal] = m;
-      this.description = strippedDesc;
-      this.defaultValue = defaultVal;
-    } else {
-      this.description = description;
-    }
+  static fromAst(ast: LuaHelpFunctionParameter) {
+    const type = LUAHELP_TO_LDOC_TYPE[ast.type];
+    if (!type) throw new Error("no known type " + ast.type);
+
+    return new LDocFunctionParam(
+      ast.name,
+      type,
+      ast.description,
+      ast.default,
+      ast.additionalDescriptions
+    );
+  }
+
+  static fromAstReturn(ast: LuaHelpFunctionReturn) {
+    const type = LUAHELP_TO_LDOC_TYPE[ast.type];
+    if (!type) throw new Error("no known type " + ast.type);
+
+    return new LDocFunctionParam("Returns", type, ast.description);
   }
 
   get isOptional() {
     return this.defaultValue != null;
   }
 
-  addDescription(desc: string) {
-    this.additionalDescription.push(desc);
-  }
-}
-
-export class LuaHelpFunction {
-  public description: string;
-  public additionalDescription: string[];
-  public params: Map<string, FunctionParam>;
-  public returnType?: FunctionParam;
-
-  constructor(public name: string) {
-    this.description = "";
-    this.additionalDescription = [];
-    this.params = new Map<string, FunctionParam>();
-    this.returnType = null;
-  }
-
-  addParam(param: FunctionParam) {
-    this.params.set(param.name, param);
+  get displayName() {
+    return this.overrideName || this.name;
   }
 
   setDescription(description: string) {
@@ -76,101 +67,95 @@ export class LuaHelpFunction {
     this.additionalDescription.push(desc);
   }
 
-  setReturnType(type: FunctionParam) {
+  setOverrideName(name: string) {
+    this.overrideName = name;
+  }
+
+  setType(type: string) {
+    this.type = type;
+  }
+}
+
+export class LDocFunction {
+  public params: Map<string, LDocFunctionParam>;
+
+  constructor(
+    public name: string,
+    public description: string[] = [],
+    public returnType?: LDocFunctionParam
+  ) {
+    this.params = new Map<string, LDocFunctionParam>();
+  }
+
+  static fromAstArray(ast: LuaHelpFunction[]) {
+    const ret = [] as LDocFunction[];
+    for (const astf of ast) {
+      const lhf = new LDocFunction(
+        astf.name,
+        astf.description,
+        astf.return ? LDocFunctionParam.fromAstReturn(astf.return) : null
+      );
+      for (const p of astf.parameters) {
+        lhf.addParam(LDocFunctionParam.fromAst(p));
+      }
+      ret.push(lhf);
+    }
+    return ret;
+  }
+
+  addParam(param: LDocFunctionParam) {
+    this.params.set(param.name, param);
+    return this;
+  }
+
+  setDescription(description: string | string[]) {
+    this.description =
+      typeof description === "string" ? [description] : description;
+  }
+
+  pushDescription(description: string) {
+    this.description.push("");
+    this.description.push(description);
+    return this;
+  }
+
+  setReturnType(type: LDocFunctionParam) {
     this.returnType = type;
   }
 }
 
-const FUNC_START_REGEX = /^([a-zA-Z0-9.]+?)\(.*\)$/m;
-const FUNC_PARAM_REGEX = /^ {2}([a-zA-Z0-9]+) \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
-const FUNC_RETURNS_REGEX = /^Returns \(([a-zA-Z0-9]+)\) ([^\n]+)$/;
-
-export class LuaHelpFunctionDocument extends LuaHelpDocument {
-  private funcs: LuaHelpFunction[];
-
-  constructor(buf: string | string[], private disableOverrides = false) {
-    super(buf);
-  }
-
-  parse() {
-    const funcs: LuaHelpFunction[] = [];
-    let currentFunc: LuaHelpFunction | null = null;
-    let currentParam: FunctionParam | null = null;
-
-    const endParam = () => {
-      if (currentParam) {
-        currentFunc.addParam(currentParam);
-      }
-      currentParam = null;
-    };
-
-    const endFunc = () => {
-      if (currentFunc) {
-        // Override if needed
-        if (!this.disableOverrides) {
-          const o = overrides[currentFunc.name];
-          if (o) {
-            if (o.type == "add") {
-              throw `Your override "${o.name}" is an existing LuaHelp function. Please remove it!`;
-            }
-            o.modify(currentFunc);
-          }
-        }
-        funcs.push(currentFunc);
-      }
-      currentFunc = null;
-    };
-
-    for (const line of this.lines) {
-      if (line.length == 0) continue;
-      let m = FUNC_START_REGEX.exec(line);
-      if (m !== null) {
-        // save curr
-        endParam();
-        endFunc();
-        currentFunc = new LuaHelpFunction(m[1]);
-      } else if (currentFunc !== null) {
-        if (line.startsWith(" ".repeat(4))) {
-          // param desc cont
-          currentParam.addDescription(line);
-        } else if ((m = FUNC_PARAM_REGEX.exec(line))) {
-          endParam();
-          currentParam = new FunctionParam(m[1], m[2], m[3]);
-        } else if ((m = FUNC_RETURNS_REGEX.exec(line))) {
-          currentFunc.setReturnType(new FunctionParam("Returns", m[1], m[2]));
-        } else {
-          currentFunc.setDescription(line);
-        }
-      }
-    }
-
-    endParam();
-    endFunc();
-    console.debug(JSON.stringify(funcs, null, 2));
-
-    this.funcs = funcs;
-  }
-
-  exportSumnekoLua() {
+const functionsConverter = {
+  type: "functions",
+  convert: (luaHelpAst) => {
     const newLines: string[] = [];
 
-    for (const func of this.funcs) {
+    for (const func of LDocFunction.fromAstArray(luaHelpAst.functions)) {
+      // Apply overrides
+      const o = overrides[func.name];
+      if (o) {
+        if (o.type == "add") {
+          throw `Your override "${o.name}" is an existing LuaHelp function. Please remove it!`;
+        }
+        o.modify(func);
+      }
+
       const parNames = [];
-      newLines.push(`--- ${func.description}`);
-      for (const desc of func.additionalDescription) {
-        newLines.push(`--- ${desc}`);
+      for (const desc of func.description) {
+        newLines.push(`---${desc ? ` ${desc}` : ""}`);
       }
 
       for (const par of func.params.values()) {
         newLines.push(
-          `--- @param ${par.name}${par.isOptional ? "?" : ""} ${par.type} ${
-            par.description
-          }${par.defaultValue ? ` (default \`${par.defaultValue}\`)` : ""}`
+          `--- @param ${par.displayName}${par.isOptional ? "?" : ""} ${
+            par.type
+          } ${par.description}${
+            par.defaultValue ? ` (default \`${par.defaultValue}\`)` : ""
+          }`
         );
         for (const desc of par.additionalDescription) {
           newLines.push(`--- ${desc}`);
         }
-        parNames.push(par.name);
+        parNames.push(par.displayName);
       }
       if (func.returnType) {
         newLines.push(
@@ -182,5 +167,6 @@ export class LuaHelpFunctionDocument extends LuaHelpDocument {
     }
 
     return newLines;
-  }
-}
+  },
+} as Converter;
+export default functionsConverter;

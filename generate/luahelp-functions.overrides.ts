@@ -1,13 +1,13 @@
-import { FunctionParam, LuaHelpFunction } from "./luahelp-functions";
+import { LDocFunctionParam, LDocFunction } from "./luahelp-functions";
 
 interface IOverrideModify {
   name: string;
-  modify: (lfnc: LuaHelpFunction) => void;
+  modify: (lfnc: LDocFunction) => void;
 }
 
 interface IOverrideAdd {
   name: string;
-  lfnc: LuaHelpFunction;
+  lfnc: LDocFunction;
 }
 
 // Edit modifiers here
@@ -18,7 +18,7 @@ const modifiers: IOverrideModify[] = [
       lfnc.setDescription("Gets the current lua thread name.");
       // Tig forgot to add a return type
       lfnc.setReturnType(
-        new FunctionParam("Returns", "string", "the current thread name", false)
+        new LDocFunctionParam("Returns", "string", "the current thread name")
       );
     },
   },
@@ -36,7 +36,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.giveEventGift",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Event elevation only.");
+      lfnc.pushDescription("Event elevation only.");
     },
   },
 
@@ -44,7 +44,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.loadFile",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -52,7 +52,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.loadPlayerData",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -61,7 +61,7 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Tig forgot to add a return type
       lfnc.setReturnType(
-        new FunctionParam("Returns", "integer", "Timer interval in min", false)
+        new LDocFunctionParam("Returns", "integer", "Timer interval in min")
       );
     },
   },
@@ -70,7 +70,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.newTimer",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
 
       // Add function signature for callback
       const pCallback = lfnc.params.get("callback");
@@ -85,7 +85,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.openEventShop",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Event elevation only.");
+      lfnc.pushDescription("Event elevation only.");
     },
   },
 
@@ -93,7 +93,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.removeTimer",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -101,7 +101,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.saveFile",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -109,7 +109,7 @@ const modifiers: IOverrideModify[] = [
     name: "system.savePlayerData",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -245,11 +245,10 @@ const modifiers: IOverrideModify[] = [
 
       // Tig forgot to add a return type
       lfnc.setReturnType(
-        new FunctionParam(
+        new LDocFunctionParam(
           "Returns",
           "integer",
-          "the shaman object identifier of the balloon",
-          false
+          "the shaman object identifier of the balloon"
         )
       );
     },
@@ -259,7 +258,7 @@ const modifiers: IOverrideModify[] = [
     name: "tfm.exec.chatMessage",
     modify: (lfnc) => {
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
     },
   },
 
@@ -291,11 +290,11 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
 
       // Tig forgot to add a return type
       lfnc.setReturnType(
-        new FunctionParam("Returns", "string", "the player's nickname", false)
+        new LDocFunctionParam("Returns", "string", "the player's nickname")
       );
     },
   },
@@ -330,7 +329,7 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Clarify permission level
-      lfnc.addDescription("Module team only.");
+      lfnc.pushDescription("Module team only.");
 
       // Standardise param descriptions
       const replaceDesc = [

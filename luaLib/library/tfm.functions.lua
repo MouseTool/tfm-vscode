@@ -32,18 +32,21 @@ function system.disableChatCommandDisplay(command, hide) end
 function system.exit() end
 
 --- Gives an event reward to the targeted player.
+---
 --- Event elevation only.
 --- @param playerName string the player to give the gift to
 --- @param giftCode string the gift identifier (given by an admin)
 function system.giveEventGift(playerName, giftCode) end
 
 --- Requests the loading of a data file. The event eventFileLoaded is triggered when the file gets loaded.
+---
 --- Module team only.
 --- @param fileNumber? integer the identifier of the file to load (default `0`)
 --- @return boolean @whether the loading got started
 function system.loadFile(fileNumber) end
 
 --- Requests the loading of the player's data for this module. The event eventPlayerDataLoaded is triggered when the player data gets loaded.
+---
 --- Module team only.
 --- @param playerName string the player about whom you want to get the data
 --- @return boolean @whether the loading got started
@@ -56,6 +59,7 @@ function system.loadPlayerData(playerName) end
 function system.luaEventLaunchInterval(interval, random) end
 
 --- Creates a new timer to call a function after a delay, once or continuously.
+---
 --- Module team only.
 --- @param callback fun(timerId:integer, arg1?:any, arg2?:any, arg3?:any, arg4?:any) The function to call. The first argument of this function is the timer's identifier
 --- @param time integer the number of milliseconds that the function call should be delayed by
@@ -68,17 +72,20 @@ function system.luaEventLaunchInterval(interval, random) end
 function system.newTimer(callback, time, loop, arg1, arg2, arg3, arg4) end
 
 --- Open the shop of the specified event.
+---
 --- Event elevation only.
 --- @param eventName string Event name.
 --- @param playerName string Target player name.
 function system.openEventShop(eventName, playerName) end
 
 --- Destroys a timer.
+---
 --- Module team only.
 --- @param timerId integer the identifier of the timer to stop
 function system.removeTimer(timerId) end
 
 --- Requests the saving of a data file (throttled to one per minute). The event eventFileSaved is triggered when the file get saved.
+---
 --- Module team only.
 --- @param data string the data to store in the file
 --- @param fileNumber? integer the identifier (from 0 to 99) of the file to write the data in (default `0`)
@@ -86,6 +93,7 @@ function system.removeTimer(timerId) end
 function system.saveFile(data, fileNumber) end
 
 --- Saves module data about a player. Please note that this data is per player and per Lua dev, so take care not to overwrite data from another one of your modules.
+---
 --- Module team only.
 --- @param playerName string the player about whom you want to save data
 --- @param data string the player data to save
@@ -203,6 +211,7 @@ function tfm.exec.attachBalloon(playerName, yes, color, transparent, speed) end
 function tfm.exec.changePlayerSize(playerName, size) end
 
 --- Displays a chat message.
+---
 --- Module team only.
 --- @param message string the chat message to display
 --- @param playerName? string the player who will get the message (if nil, applies to all players) (default `nil`)
@@ -282,6 +291,7 @@ function tfm.exec.explosion(xPosition, yPosition, power, radius, miceOnly) end
 function tfm.exec.freezePlayer(playerName, freeze, displayIce) end
 
 --- Gets the player who is the room's current synchronizer.
+---
 --- Module team only.
 --- @return string @the player's nickname
 function tfm.exec.getPlayerSync() end
@@ -428,6 +438,7 @@ function tfm.exec.setPlayerNightMode(nightMode, playerName) end
 function tfm.exec.setPlayerScore(playerName, score, add) end
 
 --- Changes the room's current synchronizer (or resets it).
+---
 --- Module team only.
 --- @param playerName string the player who should become the room sync (use nil to let the server decide)
 function tfm.exec.setPlayerSync(playerName) end

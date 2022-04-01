@@ -5,7 +5,7 @@ export interface LuaHelpFunctionParameter {
    * Additional descriptions, each being defined as texts per line, after `description`.
    */
   // TODO: Seems that all additional descriptions have "-" before them in each line... should we strip that away?
-  additionalDescriptions: string[];
+  additionalDescriptions?: string[];
   type: string;
   default?: string;
 }
@@ -17,7 +17,10 @@ export interface LuaHelpFunctionReturn {
 
 export interface LuaHelpFunction {
   name: string;
-  description: string;
+  /**
+   * The description of the event, each string representing a line of description.
+   */
+  description: string[];
   parameters: LuaHelpFunctionParameter[];
   return?: LuaHelpFunctionReturn;
 }

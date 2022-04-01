@@ -47,14 +47,12 @@ class LuaHelpFunctionParameterExporter {
 }
 
 class LuaHelpFunctionExporter {
-  public description: string;
-  public additionalDescription: string[];
+  public description: string[];
   public params: Map<string, LuaHelpFunctionParameterExporter>;
   public returnType?: LuaHelpFunctionReturn;
 
   constructor(public name: string) {
-    this.description = "";
-    this.additionalDescription = [];
+    this.description = [];
     this.params = new Map<string, LuaHelpFunctionParameterExporter>();
     this.returnType = null;
   }
@@ -63,12 +61,8 @@ class LuaHelpFunctionExporter {
     this.params.set(param.name, param);
   }
 
-  setDescription(description: string) {
-    this.description = description;
-  }
-
-  addDescription(desc: string) {
-    this.additionalDescription.push(desc);
+  pushDescription(description: string) {
+    this.description.push(description);
   }
 
   setReturnType(type: LuaHelpFunctionReturn) {
@@ -129,7 +123,7 @@ export default function functionsParser(lines: string[]) {
           type: m[1],
         });
       } else {
-        currentFunc.setDescription(line);
+        currentFunc.pushDescription(line);
       }
     }
   }

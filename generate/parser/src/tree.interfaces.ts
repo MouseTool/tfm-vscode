@@ -16,4 +16,4 @@ export type LuaHelpTreeNode =
       value: string;
     };
 
-export type LuaHelpTreeRootNode = { type: "table" } & LuaHelpTreeNode;
+export type LuaHelpTreeTableNode = { type: "table" } & LuaHelpTreeNode;
