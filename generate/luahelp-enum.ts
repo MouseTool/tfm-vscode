@@ -54,7 +54,7 @@ class LDocTableNode {
 }
 
 const enumsConverter = {
-  type: "functions",
+  type: "enums",
   convert: (luaHelpAst) => {
     const globalNode = LDocTableNode.fromAst(luaHelpAst.tree);
     const enumNode = globalNode.navigate("tfm").navigate("enum");

@@ -23,9 +23,9 @@ async function writeLuaMeta(mode: LuaHelpDocumentModes, lines: string[]) {
     functionsConverter
   ] as Converter[];
 
-  console.log("Generating...");
   for (const { type, convert } of converters) {
+    console.log("Generating... " + type)
     await writeLuaMeta(type as LuaHelpDocumentModes, convert(ast));
   }
-  console.log("Wrote output to file.");
+  console.log("Wrote output to files.");
 })();
