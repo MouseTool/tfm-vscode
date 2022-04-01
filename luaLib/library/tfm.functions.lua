@@ -105,13 +105,13 @@ function system.setLuaEventBanner(bannerId) end
 
 --- Adds a defilante bonus (token) to the map.
 --- @param type? integer Bonus type (see tfm.enum.bonus) (default `1`)
---- @param x? integer the horizontal coordinate of the bonus (default `0`)
---- @param y? integer the vertical coordinate of the bonus (default `0`)
+--- @param xPosition? integer the horizontal coordinate of the bonus (default `0`)
+--- @param yPosition? integer the vertical coordinate of the bonus (default `0`)
 --- @param id? integer the identifier of the bonus (default `0`)
 --- @param angle? integer the angle of the bonus (default `0`)
 --- @param visible? boolean whether the bonus should be visible (default `true`)
 --- @param targetPlayer? string the player who should see the bonus (if nil, applies to all players) (default `nil`)
-function tfm.exec.addBonus(type, x, y, id, angle, visible, targetPlayer) end
+function tfm.exec.addBonus(type, xPosition, yPosition, id, angle, visible, targetPlayer) end
 
 --- Adds conjuration to the map. Note: Grid coordinate are regular coordinate divided by 10 (as conjuration is a 10x10 pixel square).
 --- @param xPosition integer the horizontal grid coordinate of the conjuration
@@ -198,12 +198,12 @@ function tfm.exec.addShamanObject(objectType, xPosition, yPosition, angle, xSpee
 
 --- Spawns and attaches a ghost balloon to a player, or detaches all balloons.
 --- @param playerName string the player's nickname
---- @param yes? boolean whether the balloon should be attached (default `true`)
---- @param color? integer the color type of the balloon (between 1 and 4) (default `1`)
---- @param transparent? boolean whether the spawned balloon should be transparent (default `false`)
+--- @param attach? boolean whether the balloon should be attached (default `true`)
+--- @param colorType? integer the color type of the balloon (between 1 and 4) (default `1`)
+--- @param ghost? boolean whether the spawned balloon should be transparent (default `false`)
 --- @param speed? number the vertical speed of the balloon (default `1`)
 --- @return integer @the shaman object identifier of the balloon
-function tfm.exec.attachBalloon(playerName, yes, color, transparent, speed) end
+function tfm.exec.attachBalloon(playerName, attach, colorType, ghost, speed) end
 
 --- Changes the size of a player.
 --- @param playerName string the player's nickname
@@ -467,9 +467,9 @@ function tfm.exec.setShamanMode(playerName, mode) end
 function tfm.exec.setVampirePlayer(playerName, makeAVampire) end
 
 --- Changes the world acceleration along the horizontal (wind) and vertical (gravity) axes.
---- @param x? integer the horizontal acceleration of the world (default `0`)
---- @param y? integer the vertical acceleration of the world (default `10`)
-function tfm.exec.setWorldGravity(x, y) end
+--- @param xAcceleration? integer the horizontal acceleration of the world (default `0`)
+--- @param yAcceleration? integer the vertical acceleration of the world (default `10`)
+function tfm.exec.setWorldGravity(xAcceleration, yAcceleration) end
 
 --- Makes the snow fall.
 --- @param duration? integer the snowfall duration in seconds (default `60`)

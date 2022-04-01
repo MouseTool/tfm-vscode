@@ -120,10 +120,9 @@ const modifiers: IOverrideModify[] = [
       lfnc.setDescription("Adds a defilante bonus (token) to the map.");
 
       // Standardise param descriptions
-      const replaceDesc = [
-        // TODO: x -> xPosition
-        ["x", "the horizontal coordinate of the bonus"],
-        ["y", "the vertical coordinate of the bonus"],
+      const replacePar = [
+        ["x", "the horizontal coordinate of the bonus", "xPosition"],
+        ["y", "the vertical coordinate of the bonus", "yPosition"],
         ["id", "the identifier of the bonus"],
         ["angle", "the angle of the bonus"],
         ["visible", "whether the bonus should be visible"],
@@ -132,9 +131,10 @@ const modifiers: IOverrideModify[] = [
           "the player who should see the bonus (if nil, applies to all players)",
         ],
       ];
-      for (const r of replaceDesc) {
+      for (const r of replacePar) {
         const par = lfnc.params.get(r[0]);
-        par.description = r[1];
+        if (r[1]) par.setDescription(r[1]);
+        if (r[2]) par.setOverrideName(r[2]);
       }
     },
   },
@@ -229,18 +229,17 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Add clarity to param descs
-      const replaceDesc = [
-        // TODO: attach
-        ["yes", "whether the balloon should be attached"],
-        // TODO: colorType
-        ["color", "the color type of the balloon (between 1 and 4)"],
-        // TODO: ghost
-        ["transparent", "whether the spawned balloon should be transparent"],
+      const replacePar = [
+        ["yes", "whether the balloon should be attached", "attach"],
+        ["color", "the color type of the balloon (between 1 and 4)", "colorType"],
+        // standardise
+        ["transparent", "whether the spawned balloon should be transparent", "ghost"],
         ["speed", "the vertical speed of the balloon"],
       ];
-      for (const r of replaceDesc) {
+      for (const r of replacePar) {
         const par = lfnc.params.get(r[0]);
-        par.description = r[1];
+        if (r[1]) par.setDescription(r[1]);
+        if (r[2]) par.setOverrideName(r[2]);
       }
 
       // Tig forgot to add a return type
@@ -354,14 +353,14 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Standardise param descriptions
-      const replaceDesc = [
-        // TODO: x -> xAcceleration
-        ["x", "the horizontal acceleration of the world"],
-        ["y", "the vertical acceleration of the world"],
+      const replacePar = [
+        ["x", "the horizontal acceleration of the world", "xAcceleration"],
+        ["y", "the vertical acceleration of the world", "yAcceleration"],
       ];
-      for (const r of replaceDesc) {
+      for (const r of replacePar) {
         const par = lfnc.params.get(r[0]);
-        par.description = r[1];
+        if (r[1]) par.setDescription(r[1]);
+        if (r[2]) par.setOverrideName(r[2]);
       }
     },
   },
