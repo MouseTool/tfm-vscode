@@ -169,6 +169,15 @@ tfm.enum = {}
 --- @field lookAtPlayer boolean
 --- @field interactive boolean @Whether clicking on the NPC is enabled and will trigger `eventTalkToNPC`.
 
+--- Describes a player collision with the ground.
+--- @class tfm.ContactDef
+--- @field playerX integer
+--- @field playerY integer
+--- @field contactX integer
+--- @field contactY integer
+--- @field speedX number
+--- @field speedY number
+
 --- @class tfm.Get @Transformice metadata
 --- @field misc tfm.Misc
 --- @field room tfm.Room
