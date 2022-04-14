@@ -53,9 +53,11 @@ function system.loadFile(fileNumber) end
 function system.loadPlayerData(playerName) end
 
 --- Set or get the timer interval between two events.
---- @param interval integer Timer interval in min (default 40 min), can't be less than 40 min.
---- @param random integer Random added  interval in min (default 20 min).
---- @return integer @Timer interval in min
+---
+--- Module team only. If `interval` is given, the function is restricted to event elevation only.
+--- @param interval? integer Timer interval in min (default 40 min), can't be less than 40 min. (default `nil`)
+--- @param random? integer Random added  interval in min (default 20 min). (default `nil`)
+--- @return { interval: integer, random: integer }? @the launch interval attributes, if `interval` supplied is `nil`
 function system.luaEventLaunchInterval(interval, random) end
 
 --- Creates a new timer to call a function after a delay, once or continuously.
@@ -342,6 +344,18 @@ function tfm.exec.lowerSyncDelay(playerName) end
 --- @param angleOffset? boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default `false`)
 function tfm.exec.moveObject(objectId, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset, angle, angleOffset) end
 
+--- Defines the speed and position of a physic object.
+--- @param objectId integer The physic object identifier
+--- @param xPosition integer the horizontal coordinate of the point where the object will be moved
+--- @param yPosition integer the vertical coordinate of the point where the object will be moved
+--- @param positionOffset? boolean whether the specified position is an offset to apply to the current one, or the absolute one (default `false`)
+--- @param xSpeed? integer the horizontal coordinate of the speed to give to the object (default `0`)
+--- @param ySpeed? integer the vertical coordinate of the speed to give to the object (default `0`)
+--- @param speedOffset? boolean whether the specified speed is an offset to apply to the current one, or the absolute one (default `false`)
+--- @param angle? integer the angle of the the object (default `0`)
+--- @param angleOffset? boolean whether the specified angle is an offset to apply to the current one, or the absolute one (default `false`)
+function tfm.exec.movePhysicObject(objectId, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset, angle, angleOffset) end
+
 --- Defines the speed and position of a player.
 --- @param playerName string the player to move
 --- @param xPosition integer the horizontal coordinate of the point where the player will be moved
@@ -421,10 +435,11 @@ function tfm.exec.setGameTime(time, init) end
 --- @param color integer the color of the nickname
 function tfm.exec.setNameColor(playerName, color) end
 
---- Set the world gravity scale for a player.
+--- Set the world gravity and wind scale for a player.
 --- @param playerName string Targeted player name.
 --- @param gravityScale? number Gravity scale value. (default `1`)
-function tfm.exec.setPlayerGravityScale(playerName, gravityScale) end
+--- @param windScale? number Wind scale value. (default `1`)
+function tfm.exec.setPlayerGravityScale(playerName, gravityScale, windScale) end
 
 --- Set the night mode for a player.
 --- @param nightMode? boolean Enable or disable the night mode. (default `true`)

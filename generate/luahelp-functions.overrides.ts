@@ -10,6 +10,17 @@ interface IOverrideAdd {
   lfnc: LDocFunction;
 }
 
+function fixParam(
+  levt: LDocFunction,
+  replace: [name: string, desc?: string, overrideName?: string][]
+) {
+  for (const [name, desc, overrideName] of replace) {
+    const par = levt.params.get(name);
+    if (desc) par.setDescription(desc);
+    if (overrideName) par.setOverrideName(overrideName);
+  }
+}
+
 // Edit modifiers here
 const modifiers: IOverrideModify[] = [
   {
@@ -59,9 +70,28 @@ const modifiers: IOverrideModify[] = [
   {
     name: "system.luaEventLaunchInterval",
     modify: (lfnc) => {
+      // Clarify permission level
+      lfnc.pushDescription(
+        "Module team only. If `interval` is given, the function is restricted to event elevation only."
+      );
+
+      // Arguments are optional
+      for (const pName of ["interval", "random"]) {
+        lfnc.params.get(pName).defaultValue = "nil";
+      }
+
+      // TODO: Could use an overload specifying different return types, but not a priority
+      // now because the language server doesnt yet differentiate the return types based
+      // on the function signature either way
+      //--- @overload fun():{ interval: integer, random: integer }?
+
       // Tig forgot to add a return type
       lfnc.setReturnType(
-        new LDocFunctionParam("Returns", "integer", "Timer interval in min")
+        new LDocFunctionParam(
+          "Returns",
+          "{ interval: integer, random: integer }?",
+          "the launch interval attributes, if `interval` supplied is `nil`"
+        )
       );
     },
   },
@@ -120,7 +150,7 @@ const modifiers: IOverrideModify[] = [
       lfnc.setDescription("Adds a defilante bonus (token) to the map.");
 
       // Standardise param descriptions
-      const replacePar = [
+      fixParam(lfnc, [
         ["x", "the horizontal coordinate of the bonus", "xPosition"],
         ["y", "the vertical coordinate of the bonus", "yPosition"],
         ["id", "the identifier of the bonus"],
@@ -130,12 +160,7 @@ const modifiers: IOverrideModify[] = [
           "targetPlayer",
           "the player who should see the bonus (if nil, applies to all players)",
         ],
-      ];
-      for (const r of replacePar) {
-        const par = lfnc.params.get(r[0]);
-        if (r[1]) par.setDescription(r[1]);
-        if (r[2]) par.setOverrideName(r[2]);
-      }
+      ]);
     },
   },
 
@@ -143,7 +168,7 @@ const modifiers: IOverrideModify[] = [
     name: "tfm.exec.addImage",
     modify: (lfnc) => {
       // Add clarity to param descs
-      const replaceDesc = [
+      fixParam(lfnc, [
         [
           "xPosition",
           "the horizontal offset of the anchor of the image, relative to the game element (0 being the middle of the game element)",
@@ -170,11 +195,7 @@ const modifiers: IOverrideModify[] = [
           "anchorY",
           "the vertical offset (in 0 to 1 scale) of the image's anchor, relative to the image (0 being the top of the image)",
         ],
-      ];
-      for (const r of replaceDesc) {
-        const par = lfnc.params.get(r[0]);
-        par.description = r[1];
-      }
+      ]);
     },
   },
 
@@ -183,19 +204,19 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Point jointDef to custom type
       const pJoint = lfnc.params.get("jointDef");
-      pJoint.type = "tfm.JointDef";
-      pJoint.description = "the joint configuration";
+      pJoint.setType("tfm.JointDef");
+      pJoint.setDescription("the joint configuration");
     },
   },
 
   {
     name: "tfm.exec.addNPC",
     modify: (lfnc) => {
-      lfnc.setDescription("Spawns an NPC.")
+      lfnc.setDescription("Spawns an NPC.");
 
       // Point npcDef to custom type
       const pNpc = lfnc.params.get("npcDef");
-      pNpc.type = "tfm.NPCDef";
+      pNpc.setType("tfm.NPCDef");
       pNpc.description = "the NPC configuration";
     },
   },
@@ -205,8 +226,8 @@ const modifiers: IOverrideModify[] = [
     modify: (lfnc) => {
       // Point bodyDef to custom type
       const pBody = lfnc.params.get("bodyDef");
-      pBody.type = "tfm.BodyDef";
-      pBody.description = "the ground configuration";
+      pBody.setType("tfm.BodyDef");
+      pBody.setDescription("the ground configuration");
     },
   },
 
@@ -229,18 +250,21 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Add clarity to param descs
-      const replacePar = [
+      fixParam(lfnc, [
         ["yes", "whether the balloon should be attached", "attach"],
-        ["color", "the color type of the balloon (between 1 and 4)", "colorType"],
+        [
+          "color",
+          "the color type of the balloon (between 1 and 4)",
+          "colorType",
+        ],
         // standardise
-        ["transparent", "whether the spawned balloon should be transparent", "ghost"],
+        [
+          "transparent",
+          "whether the spawned balloon should be transparent",
+          "ghost",
+        ],
         ["speed", "the vertical speed of the balloon"],
-      ];
-      for (const r of replacePar) {
-        const par = lfnc.params.get(r[0]);
-        if (r[1]) par.setDescription(r[1]);
-        if (r[2]) par.setOverrideName(r[2]);
-      }
+      ]);
 
       // Tig forgot to add a return type
       lfnc.setReturnType(
@@ -268,15 +292,11 @@ const modifiers: IOverrideModify[] = [
       lfnc.setDescription("Freezes the selected player.");
 
       // Add clarity to param descs
-      const replaceDesc = [
+      fixParam(lfnc, [
         ["playerName", "the player to freeze"],
         ["freeze", "whether the player should be frozen"],
         ["displayIce", "whether the ice sprite should be shown on the player"],
-      ];
-      for (const r of replaceDesc) {
-        const par = lfnc.params.get(r[0]);
-        par.description = r[1];
-      }
+      ]);
     },
   },
 
@@ -305,17 +325,13 @@ const modifiers: IOverrideModify[] = [
       lfnc.setDescription("Removes a defilante bonus (token).");
 
       // Standardise param descriptions
-      const replaceDesc = [
+      fixParam(lfnc, [
         ["id", "the identifier of the bonus"],
         [
           "targetPlayer",
           "the player whom should have the bonus removed (if nil, applies to all players)",
         ],
-      ];
-      for (const r of replaceDesc) {
-        const par = lfnc.params.get(r[0]);
-        par.description = r[1];
-      }
+      ]);
     },
   },
 
@@ -331,16 +347,12 @@ const modifiers: IOverrideModify[] = [
       lfnc.pushDescription("Module team only.");
 
       // Standardise param descriptions
-      const replaceDesc = [
+      fixParam(lfnc, [
         [
           "playerName",
           "the player who should become the room sync (use nil to let the server decide)",
         ],
-      ];
-      for (const r of replaceDesc) {
-        const par = lfnc.params.get(r[0]);
-        par.description = r[1];
-      }
+      ]);
     },
   },
 
@@ -353,15 +365,10 @@ const modifiers: IOverrideModify[] = [
       );
 
       // Standardise param descriptions
-      const replacePar = [
+      fixParam(lfnc, [
         ["x", "the horizontal acceleration of the world", "xAcceleration"],
         ["y", "the vertical acceleration of the world", "yAcceleration"],
-      ];
-      for (const r of replacePar) {
-        const par = lfnc.params.get(r[0]);
-        if (r[1]) par.setDescription(r[1]);
-        if (r[2]) par.setOverrideName(r[2]);
-      }
+      ]);
     },
   },
 
@@ -369,18 +376,10 @@ const modifiers: IOverrideModify[] = [
     name: "tfm.exec.setBackgroundColor",
     modify: (lfnc) => {
       // Add clarity to description
-      lfnc.setDescription(
-        "Sets the map background color."
-      );
+      lfnc.setDescription("Sets the map background color.");
 
       // Standardise param descriptions
-      const replaceDesc = [
-        ["color", "the background color, in hex code format"],
-      ];
-      for (const r of replaceDesc) {
-        const par = lfnc.params.get(r[0]);
-        par.description = r[1];
-      }
+      fixParam(lfnc, [["color", "the background color, in hex code format"]]);
     },
   },
 ];

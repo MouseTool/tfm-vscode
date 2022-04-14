@@ -288,6 +288,7 @@ tfm
     linkMice
     lowerSyncDelay
     moveObject
+    movePhysicObject
     movePlayer
     newGame
     playEmote
@@ -319,7 +320,7 @@ tfm
   get
     misc
       apiVersion : 0.28
-      transformiceVersion : 7.92
+      transformiceVersion : 7.96
     room
       community : -
       currentMap : 0
@@ -362,7 +363,7 @@ tfm
           movingLeft : false
           movingRight : false
           playerName : Tigrounette
-          registrationDate : 1648132114020
+          registrationDate : 1649946137369
           score : 0
           shamanMode : 0
           spouseId : 1
@@ -857,6 +858,18 @@ Defines the speed and position of a shaman object.
   angle (Int) the angle of the the object (default 0)
   angleOffset (Boolean) whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
 
+tfm.exec.movePhysicObject(objectId, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset, angle, angleOffset)
+Defines the speed and position of a physic object.
+  objectId (Int) The physic object identifier
+  xPosition (Int) the horizontal coordinate of the point where the object will be moved
+  yPosition (Int) the vertical coordinate of the point where the object will be moved
+  positionOffset (Boolean) whether the specified position is an offset to apply to the current one, or the absolute one (default false)
+  xSpeed (Int) the horizontal coordinate of the speed to give to the object (default 0)
+  ySpeed (Int) the vertical coordinate of the speed to give to the object (default 0)
+  speedOffset (Boolean) whether the specified speed is an offset to apply to the current one, or the absolute one (default false)
+  angle (Int) the angle of the the object (default 0)
+  angleOffset (Boolean) whether the specified angle is an offset to apply to the current one, or the absolute one (default false)
+
 tfm.exec.movePlayer(playerName, xPosition, yPosition, positionOffset, xSpeed, ySpeed, speedOffset)
 Defines the speed and position of a player.
   playerName (String) the player to move
@@ -936,10 +949,11 @@ Changes a player's nickname's color.
   playerName (String) the player whose nickname  should be colored
   color (Int) the color of the nickname
 
-tfm.exec.setPlayerGravityScale(playerName, gravityScale)
-Set the world gravity scale for a player.
+tfm.exec.setPlayerGravityScale(playerName, gravityScale, windScale)
+Set the world gravity and wind scale for a player.
   playerName (String) Targeted player name.
   gravityScale (Number) Gravity scale value. (default 1)
+  windScale (Number) Wind scale value. (default 1)
 
 tfm.exec.setPlayerNightMode(nightMode, playerName)
 Set the night mode for a player.
